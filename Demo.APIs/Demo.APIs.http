@@ -1,6 +1,9 @@
-@Demo.APIs_HostAddress = http://localhost:5147
+### Base URL
+@HostAddress = https://localhost:7276      
 
-GET {{Demo.APIs_HostAddress}}/weatherforecast/
+
+### Weatherforecast EndPoint
+GET {{HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
+

@@ -1,3 +1,4 @@
+using Demo.APIs.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.APIs.Controllers
