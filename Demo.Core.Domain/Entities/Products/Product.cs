@@ -1,13 +1,6 @@
-﻿using Demo.Core.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Demo.Core.Domain.Entities.Products
+﻿namespace Demo.Core.Domain.Entities.Products
 {
-    public class Products : BaseEntity<int>
+    public class Product : BaseEntity<int>
     {
         public required string Name { get; set; }
         public required string Description { get; set; }

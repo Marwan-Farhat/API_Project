@@ -11,8 +11,8 @@ namespace Demo.Core.Domain.Common
         public required TKey Id { get; set; }        // required is a keyword to enforce new to not initialize this property but
                                                      // when we make an object from class we must initialize this property in object initializer 
         public required string CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public required string LastModifiedBy { get; set; }
-        public DateTime LastModifiedOn { get; set; }
+        public DateTime LastModifiedOn { get; set; } = DateTime.UtcNow;
     }
 }
