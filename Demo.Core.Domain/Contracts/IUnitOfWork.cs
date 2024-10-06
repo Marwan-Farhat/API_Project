@@ -9,9 +9,7 @@ namespace Demo.Core.Domain.Contracts
 {
     public interface IUnitOfWork : IAsyncDisposable
     {
-        public IGenericRepository<Product, int> ProductRepository { get; }
-        public IGenericRepository<ProductBrand, int> BrandsRepository { get; }
-        public IGenericRepository<ProductCategory, int> CategoriesRepository { get; }
+        IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>;
         Task<int> CompleteAsync();
     }
 
@@ -25,6 +23,15 @@ namespace Demo.Core.Domain.Contracts
     /// }
 
     // Second Way For Implementation
+    /// public interface IUnitOfWork : IAsyncDisposable
+    /// {
+    ///     public IGenericRepository<Product, int> ProductRepository { get; }
+    ///     public IGenericRepository<ProductBrand, int> BrandsRepository { get; }
+    ///     public IGenericRepository<ProductCategory, int> CategoriesRepository { get; }
+    ///     Task<int> CompleteAsync();
+    /// }
+
+    // Third Way For Implementation
     /// public interface IUnitOfWork : IAsyncDisposable
     /// {
     ///     public IGenericRepository<Product, int> ProductRepository { get; }
