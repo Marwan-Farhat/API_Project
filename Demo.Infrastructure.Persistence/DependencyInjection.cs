@@ -1,4 +1,5 @@
-﻿using Demo.Infrastructure.Persistence.Data;
+﻿using Demo.Core.Domain.Contracts;
+using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,10 @@ namespace Demo.Infrastructure.Persistence
             services.AddDbContext<StoreContext>((optionsBuilder) =>
             {
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString("StoreContext"));
-            }); 
+            });
+
+            services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+
             return services;
         }     
     }
