@@ -24,6 +24,8 @@ namespace Demo.APIs
 
             var app = builder.Build();
 
+            #region Update Database and Seeding
+
             using var scope = app.Services.CreateAsyncScope();             // To Create a scoped Request Explicitly
             var services = scope.ServiceProvider;                          // ServiceProvider method provide for me scoped services to choose 
             var dbContext = services.GetRequiredService<StoreContext>();   // CLR Create object from StoreContext
@@ -35,13 +37,16 @@ namespace Demo.APIs
                 var pendingMigrations = dbContext.Database.GetPendingMigrations();  // Will Send a request to get if there is any pending Migrations
                 if (pendingMigrations.Any())
                     await dbContext.Database.MigrateAsync();            // Update Database
+
+                await StoreContextSeed.SeedAsync(dbContext);            // To Seed Data
             }
             catch (Exception ex)
             {
 
                 var logger = loggerFactory.CreateLogger<Program>();
                 logger.LogError(ex, "An error has been occured during applying the migration");
-            }
+            } 
+            #endregion
 
             #region Configure Kestrel Middlwares
 
