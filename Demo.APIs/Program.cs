@@ -1,9 +1,15 @@
 
+using Demo.APIs.Extensions;
+using Demo.Core.Domain.Contracts;
+using Demo.Infrastructure.Persistence;
+using Demo.Infrastructure.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Demo.APIs
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +18,19 @@ namespace Demo.APIs
             builder.Services.AddControllers();   // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(); 
+            builder.Services.AddSwaggerGen();
 
-            #endregion  
+            builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for DbContext
+
+            #endregion
 
             var app = builder.Build();
+
+            #region Databases Initializer
+
+            await app.InitializeStoreContextAsync();
+
+            #endregion
 
             #region Configure Kestrel Middlwares
 
