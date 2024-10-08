@@ -1,5 +1,7 @@
 
 using Demo.APIs.Extensions;
+using Demo.APIs.Services;
+using Demo.Core.Application.Abstraction;
 using Demo.Core.Domain.Contracts;
 using Demo.Infrastructure.Persistence;
 using Demo.Infrastructure.Persistence.Data;
@@ -16,11 +18,14 @@ namespace Demo.APIs
             #region Configure Services
            
             builder.Services.AddControllers();   // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for DbContext
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
 
             #endregion
 

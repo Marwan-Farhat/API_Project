@@ -1,6 +1,9 @@
-﻿using Demo.Core.Domain.Contracts;
+﻿using Demo.Core.Application.Abstraction;
+using Demo.Core.Domain.Contracts;
 using Demo.Infrastructure.Persistence.Data;
+using Demo.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,6 +24,7 @@ namespace Demo.Infrastructure.Persistence
             });
 
             services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
             return services;
         }     
