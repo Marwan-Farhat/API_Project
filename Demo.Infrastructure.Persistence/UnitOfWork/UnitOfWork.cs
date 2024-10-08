@@ -23,7 +23,7 @@ namespace Demo.Infrastructure.Persistence.UnitOfWork
             _repository = new ConcurrentDictionary<string, object>();
         }
 
-        public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseEntity<TKey>where TKey : IEquatable<TKey>
+        public IGenericRepository<TEntity, TKey> GetRepository<TEntity, TKey>() where TEntity : BaseAuditableEntity<TKey>where TKey : IEquatable<TKey>
         {
             /// var typeName = typeof(TEntity).Name;
             /// if(_repository.ContainsKey(typeName))  // if we already make an object from this repository he need it will return it to him 

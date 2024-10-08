@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence.Repositories
 {
-    internal class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
+    internal class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseAuditableEntity<TKey> where TKey : IEquatable<TKey>
     {
         private readonly StoreContext _dbContext;
 
