@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Demo.APIs.Controllers\Demo.APIs.Controllers.csproj" />
     <ProjectReference Include="..\Demo.Core.Application.Abstraction\Demo.Core.Application.Abstraction.csproj" />
     <ProjectReference Include="..\Demo.Infrastructure.Persistence\Demo.Infrastructure.Persistence.csproj" />
   </ItemGroup>

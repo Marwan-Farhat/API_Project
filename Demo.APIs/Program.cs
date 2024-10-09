@@ -17,8 +17,9 @@ namespace Demo.APIs
 
             #region Configure Services
            
-            builder.Services.AddControllers();   // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
-        
+            builder.Services.AddControllers()       // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
+                             .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // Make API Project to know that Controller in another project and give it Assembly Information of that project
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
