@@ -25,6 +25,7 @@ namespace Demo.Infrastructure.Persistence
 
             services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
             services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
             return services;
         }     
