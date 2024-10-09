@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Domain.Common;
 using Demo.Core.Domain.Contracts;
+using Demo.Core.Domain.Entities.Products;
 using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,16 @@ namespace Demo.Infrastructure.Persistence.Repositories
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
-                 => withTracking ? await _dbContext.Set<TEntity>().ToListAsync() : await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        {
+            if (typeof(TEntity) == typeof(Product))
+                return withTracking?
+                    (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync():
+                    (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync();
+
+                return withTracking?
+                await _dbContext.Set<TEntity>().ToListAsync() :
+                await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        }
         /// {
         ///     if (withTracking)
         ///         return await _dbContext.Set<TEntity>().ToListAsync();
@@ -28,7 +38,7 @@ namespace Demo.Infrastructure.Persistence.Repositories
         ///     return await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         /// 
         /// }
-      
+
         public async Task<TEntity?> GetAsync(TKey id) => await _dbContext.Set<TEntity>().FindAsync(id);
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
