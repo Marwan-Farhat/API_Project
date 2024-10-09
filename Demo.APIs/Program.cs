@@ -1,4 +1,4 @@
-
+using Demo.Core.Application;
 using Demo.APIs.Extensions;
 using Demo.APIs.Services;
 using Demo.Core.Application.Abstraction;
@@ -24,6 +24,7 @@ namespace Demo.APIs
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for DbContext
+            builder.Services.AddApplicationServices();
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
