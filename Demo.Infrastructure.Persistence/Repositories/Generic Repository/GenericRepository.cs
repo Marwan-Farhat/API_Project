@@ -34,7 +34,7 @@ namespace Demo.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity, TKey> spec, bool withTracking = false)
         {
             return await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec).ToListAsync();
-        }0
+        }
         public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
         {
             return await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec).FirstOrDefaultAsync();

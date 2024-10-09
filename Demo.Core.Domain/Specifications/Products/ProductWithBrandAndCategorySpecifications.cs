@@ -10,8 +10,19 @@ namespace Demo.Core.Domain.Specifications.Products
 {
     public class ProductWithBrandAndCategorySpecifications: BaseSpecifications<Product,int>
     {
-        // This object created via this constructor is used for building the Query that will get all products
+        // This Spec object created via this constructor is used for building the Query that will get all products
         public ProductWithBrandAndCategorySpecifications():base()
+        {
+            AddIncludes();
+        }
+       
+        // This Spec object created via this constructor is used for building the Query that will get a Specific product
+        public ProductWithBrandAndCategorySpecifications(int id) : base()
+        {
+            AddIncludes();
+        }
+
+        private void AddIncludes()
         {
             Includes.Add(P => P.Brand!);
             Includes.Add(P => P.Category!);
