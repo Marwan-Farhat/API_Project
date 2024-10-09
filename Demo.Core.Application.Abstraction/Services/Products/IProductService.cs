@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Services
+namespace Demo.Core.Application.Abstraction.Services.Products
 {
     public interface IProductService
     {
         Task<IEnumerable<ProductToReturnDto>> GetProductsAsync();
-        Task <ProductToReturnDto> GetProductAsync(int id);
+        Task<ProductToReturnDto> GetProductAsync(int id);
         Task<IEnumerable<BrandDto>> GetBrandsAsync();
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
     }
