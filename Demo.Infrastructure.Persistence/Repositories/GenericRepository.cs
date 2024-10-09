@@ -23,7 +23,7 @@ namespace Demo.Infrastructure.Persistence.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
         {
             if (typeof(TEntity) == typeof(Product))
-                return withTracking?
+                return withTracking? 
                     (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync():
                     (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync();
 
@@ -39,7 +39,13 @@ namespace Demo.Infrastructure.Persistence.Repositories
         /// 
         /// }
 
-        public async Task<TEntity?> GetAsync(TKey id) => await _dbContext.Set<TEntity>().FindAsync(id);
+        public async Task<TEntity?> GetAsync(TKey id)
+        {
+            if (typeof(TEntity) == typeof(Product)) 
+                return await _dbContext.Set<Product>().Where(P => P.Id.Equals(id)).Include(P => P.Brand).Include(P => P.Category).FirstOrDefaultAsync() as TEntity;
+
+            return await _dbContext.Set<TEntity>().FindAsync(id);
+        }
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
         public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
