@@ -2,7 +2,7 @@
 using Demo.Core.Application.Abstraction.Services;
 using Demo.Core.Application.Abstraction.Services.Products;
 using Demo.Core.Application.Services.Products;
-using Demo.Core.Domain.Contracts;
+using Demo.Core.Domain.Contracts.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;

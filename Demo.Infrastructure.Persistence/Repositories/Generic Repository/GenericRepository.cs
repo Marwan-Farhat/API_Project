@@ -2,6 +2,7 @@
 using Demo.Core.Domain.Contracts;
 using Demo.Core.Domain.Entities.Products;
 using Demo.Infrastructure.Persistence.Data;
+using Demo.Infrastructure.Persistence.Repositories.Generic_Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,32 +23,33 @@ namespace Demo.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
         {
-            if (typeof(TEntity) == typeof(Product))
-                return withTracking? 
-                    (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync():
-                    (IEnumerable<TEntity>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync();
-
-                return withTracking?
-                await _dbContext.Set<TEntity>().ToListAsync() :
-                await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+            return withTracking ?
+            await _dbContext.Set<TEntity>().ToListAsync() :
+            await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
         }
-        /// {
-        ///     if (withTracking)
-        ///         return await _dbContext.Set<TEntity>().ToListAsync();
-        /// 
-        ///     return await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
-        /// 
-        /// }
-
         public async Task<TEntity?> GetAsync(TKey id)
         {
-            if (typeof(TEntity) == typeof(Product)) 
-                return await _dbContext.Set<Product>().Where(P => P.Id.Equals(id)).Include(P => P.Brand).Include(P => P.Category).FirstOrDefaultAsync() as TEntity;
-
             return await _dbContext.Set<TEntity>().FindAsync(id);
+        }
+        public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity, TKey> spec, bool withTracking = false)
+        {
+            return await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec).ToListAsync();
+        }0
+        public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec).FirstOrDefaultAsync();
         }
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
         public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
+
+        #region Helpers
+
+        private IQueryable<TEntity> ApplySpecifications(ISpecifications<TEntity,TKey> spec)
+        {
+            return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec); 
+        }
+
+        #endregion
     }
 }

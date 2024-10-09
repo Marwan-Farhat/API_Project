@@ -1,4 +1,4 @@
-﻿using Demo.Core.Domain.Contracts;
+﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore;
