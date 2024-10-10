@@ -49,7 +49,7 @@ namespace Demo.APIs
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.MapControllers(); 
 
             #endregion

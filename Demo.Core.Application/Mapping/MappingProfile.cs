@@ -17,7 +17,10 @@ namespace Demo.Core.Application.Mapping
         {
             CreateMap<Product, ProductToReturnDto>()
                 .ForMember(D => D.Brand, O => O.MapFrom(src => src.Brand!.Name))
-                .ForMember(D => D.Category, O => O.MapFrom(src => src.Category!.Name));
+                .ForMember(D => D.Category, O => O.MapFrom(src => src.Category!.Name))
+                //.ForMember(D => D.PictureUrl, O => O.MapFrom(src => $"{"https://localhost:7276"}{ src.PictureUrl}"));
+                .ForMember(D => D.PictureUrl, O => O.MapFrom<ProductPictureUrlResolver>());
+
 
             CreateMap<ProductBrand, BrandDto>();
 
