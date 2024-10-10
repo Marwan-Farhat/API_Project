@@ -1,5 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
-using Demo.Core.Application.Abstraction.Models;
+using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

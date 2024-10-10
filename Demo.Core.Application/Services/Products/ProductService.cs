@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models;
+using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services.Products;
 using Demo.Core.Domain;
 using Demo.Core.Domain.Contracts.Persistence;

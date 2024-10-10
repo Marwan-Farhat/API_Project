@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models;
+using Demo.Core.Application.Abstraction.Models.Employees;
+using Demo.Core.Application.Abstraction.Models.Products;
+using Demo.Core.Domain.Entities.Employees;
 using Demo.Core.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,8 @@ namespace Demo.Core.Application.Mapping
             CreateMap<ProductBrand, BrandDto>();
 
             CreateMap<ProductCategory, CategoryDto>();
+
+            CreateMap<Employee, EmployeeToReturnDto>();
         }
     }
 }
