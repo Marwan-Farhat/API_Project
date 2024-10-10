@@ -1,11 +1,13 @@
+using Demo.APIs.Controllers.Base;
 using Demo.APIs.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Demo.APIs.Controllers
 {
     [ApiController]
     [Route("/api[controller]")]  
-    public class WeatherForecastController : ControllerBase
+    public class WeatherForecastController : BaseApiController
     {
         private static readonly string[] Summaries = new[]
         {

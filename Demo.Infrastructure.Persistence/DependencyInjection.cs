@@ -1,13 +1,10 @@
-﻿using Demo.Core.Domain.Contracts;
+﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Infrastructure.Persistence.Data;
+using Demo.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence
 {
@@ -17,10 +14,14 @@ namespace Demo.Infrastructure.Persistence
         {
             services.AddDbContext<StoreContext>((optionsBuilder) =>
             {
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             });
 
             services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
             return services;
         }     

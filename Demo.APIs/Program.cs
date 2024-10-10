@@ -1,5 +1,7 @@
-
+using Demo.Core.Application;
 using Demo.APIs.Extensions;
+using Demo.APIs.Services;
+using Demo.Core.Application.Abstraction;
 using Demo.Core.Domain.Contracts;
 using Demo.Infrastructure.Persistence;
 using Demo.Infrastructure.Persistence.Data;
@@ -15,12 +17,17 @@ namespace Demo.APIs
 
             #region Configure Services
            
-            builder.Services.AddControllers();   // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddControllers()       // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
+                             .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // Make API Project to know that Controller in another project and give it Assembly Information of that project
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for DbContext
+            builder.Services.AddApplicationServices();
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
 
             #endregion
 
@@ -42,7 +49,7 @@ namespace Demo.APIs
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.MapControllers(); 
 
             #endregion

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence.Data.Configurations.Products
 {
-    internal class ProductConfigurations : BaseEntityConfigurations<Product,int>
+    internal class ProductConfigurations : BaseAuditableEntityConfigurations<Product,int>
     {
         public override void Configure(EntityTypeBuilder<Product> builder)
         {

@@ -1,4 +1,4 @@
-﻿using Demo.Core.Domain.Contracts;
+﻿using Demo.Core.Domain.Contracts.Persistence;
 
 namespace Demo.APIs.Extensions
 {

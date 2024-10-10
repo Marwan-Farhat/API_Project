@@ -1,4 +1,4 @@
-﻿using Demo.Core.Domain.Contracts;
+﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 using System;
