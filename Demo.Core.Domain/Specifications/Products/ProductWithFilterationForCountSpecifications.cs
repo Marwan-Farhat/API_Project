@@ -9,8 +9,10 @@ namespace Demo.Core.Domain.Specifications.Products
 {
     public class ProductWithFilterationForCountSpecifications : BaseSpecifications<Product, int>
     {
-        public ProductWithFilterationForCountSpecifications(int? brandId, int? categoryId)
-       : base(P => (!brandId.HasValue || P.BrandId == brandId.Value) && (!categoryId.HasValue || P.CategoryId == categoryId.Value))
+        public ProductWithFilterationForCountSpecifications(int? brandId, int? categoryId, string? search)
+       : base(P =>  (string.IsNullOrEmpty(search) || P.NormalizedName.Contains(search)) 
+                 && (!brandId.HasValue || P.BrandId == brandId.Value)
+                 && (!categoryId.HasValue || P.CategoryId == categoryId.Value))
         {
         }
     }

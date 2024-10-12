@@ -8,15 +8,16 @@ namespace Demo.Core.Application.Abstraction.Models.Products
 {
     public class ProductSpecParams
     {
-        public string? Sort { get; set; }
-        public int? BrandId { get; set;}
-        public int? CategoryId { get; set; }
-
-        public int PageIndex { get; set; } = 1;  //  1 for Default value
-
+        private string? search;
         private const int MaxPageSize = 10;
         private int pageSize = 5;                //  5 for Default value
-        public int PageSize { get { return pageSize; } set { pageSize = value > MaxPageSize ? MaxPageSize : value; } }
 
+        public string? Sort { get; set; }
+        public int? BrandId { get; set;}
+        public int? CategoryId { get; set; }       
+        public string? Search
+        { get { return search; } set { search = value?.ToUpper(); } }
+        public int PageIndex { get; set; } = 1;  //  1 for Default value       
+        public int PageSize { get { return pageSize; } set { pageSize = value > MaxPageSize ? MaxPageSize : value; } }
     }
 }
