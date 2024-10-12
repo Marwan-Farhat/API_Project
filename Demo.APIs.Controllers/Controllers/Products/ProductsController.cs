@@ -13,9 +13,9 @@ namespace Demo.APIs.Controllers.Controllers.Products
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
         [HttpGet]  // GET: /api/products
-        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(string? sort)
+        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(string? sort,int? brandId, int? categoryId)
         {
-            var products = await serviceManager.ProductService.GetProductsAsync(sort);
+            var products = await serviceManager.ProductService.GetProductsAsync(sort, brandId, categoryId);
             return Ok(products);
         }
 

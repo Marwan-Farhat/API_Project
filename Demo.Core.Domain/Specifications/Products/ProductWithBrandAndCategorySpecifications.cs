@@ -11,30 +11,26 @@ namespace Demo.Core.Domain.Specifications.Products
     public class ProductWithBrandAndCategorySpecifications: BaseSpecifications<Product,int>
     {
         // This Spec object created via this constructor is used for building the Query that will get all products
-        public ProductWithBrandAndCategorySpecifications(string? sort):base()
+        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId)
+        :base( P=>(!brandId.HasValue || P.BrandId == brandId.Value) && (!categoryId.HasValue || P.CategoryId == categoryId.Value) )
         {
             AddIncludes();
-            AddOrderBy(P => P.Name);
 
-            if (!string.IsNullOrEmpty(sort))
+            switch(sort)
             {
-                switch(sort)
-                {
-                    case "nameDesc":
-                        AddOrderByDesc(P => P.Name);
-                        break;
-                    case "priceAsc":
-                        AddOrderBy(P => P.Price);
-                        break;
-                    case "priceDesc":
-                        AddOrderByDesc(P => P.Price);
-                        break;
-                    default:
-                        AddOrderBy(P => P.Name);
-                        break;
-                }              
-            }   
-             
+                case "nameDesc":
+                    AddOrderByDesc(P => P.Name);
+                    break;
+                case "priceAsc":
+                    AddOrderBy(P => P.Price);
+                    break;
+                case "priceDesc":
+                    AddOrderByDesc(P => P.Price);
+                    break;
+                default:
+                    AddOrderBy(P => P.Name);
+                    break;
+            }                                   
         }
        
         // This Spec object created via this constructor is used for building the Query that will get a Specific product
@@ -42,7 +38,6 @@ namespace Demo.Core.Domain.Specifications.Products
         {
             AddIncludes();
         }
-
         private protected override void AddIncludes()
         {
             base.AddIncludes();
