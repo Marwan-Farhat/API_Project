@@ -28,6 +28,11 @@ namespace Demo.Infrastructure.Persistence.Repositories.Generic_Repository
                 query = query.OrderBy(spec.OrderBy);
 
 
+            // Pagination
+            if (spec.IsPaginationEnabled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
+
             // include expression
             query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));            
             // query =  _dbContext.Set<TEntity>().Include(P=>P.Brand)

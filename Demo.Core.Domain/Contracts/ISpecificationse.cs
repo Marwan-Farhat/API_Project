@@ -9,13 +9,20 @@ namespace Demo.Core.Domain.Contracts
 {
     public interface ISpecifications<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
+        // Criteria
         public Expression<Func<TEntity,bool>>? Criteria { get; set; }  // This is where Specs we choose the Type as Expression of Func as where takes an Expression ( P=>P.Id == id )
 
+        // Include
         public List<Expression<Func<TEntity,object>>> Includes { get; set; }  // This is where Specs we choose the Type as Expression of Predicate as where takes an Expression ( P=>P.Id == id )
 
+        // Order
         public Expression<Func<TEntity,object>>? OrderBy { get; set; }  // This is where Specs we choose the Type as Expression of Func Take the Entity We need to sort and return the property we sort by it
-
         public Expression<Func<TEntity, object>>? OrderByDesc { get; set; }
+
+        // Pagination
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPaginationEnabled { get; set; }
 
     }
 }

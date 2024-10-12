@@ -11,11 +11,13 @@ namespace Demo.Core.Domain.Specifications.Products
     public class ProductWithBrandAndCategorySpecifications: BaseSpecifications<Product,int>
     {
         // This Spec object created via this constructor is used for building the Query that will get all products
-        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId)
+        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId, int PageSize, int PageIndex)
         :base( P=>(!brandId.HasValue || P.BrandId == brandId.Value) && (!categoryId.HasValue || P.CategoryId == categoryId.Value) )
         {
+            // Include
             AddIncludes();
 
+            // Sort
             switch(sort)
             {
                 case "nameDesc":
@@ -30,7 +32,10 @@ namespace Demo.Core.Domain.Specifications.Products
                 default:
                     AddOrderBy(P => P.Name);
                     break;
-            }                                   
+            }
+
+            // Pagination
+            ApplyPagination(PageSize * (PageIndex - 1), PageSize);
         }
        
         // This Spec object created via this constructor is used for building the Query that will get a Specific product
