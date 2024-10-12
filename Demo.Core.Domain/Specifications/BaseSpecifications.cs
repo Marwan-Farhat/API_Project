@@ -13,6 +13,8 @@ namespace Demo.Core.Domain.Specifications
     {
         public Expression<Func<TEntity, bool>>? Criteria { get; set; } = null!;
         public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new List<Expression<Func<TEntity, object>>>();
+        public Expression<Func<TEntity, object>>? OrderBy { get; set; }
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; set; }
 
         public BaseSpecifications()
         {
@@ -21,6 +23,19 @@ namespace Demo.Core.Domain.Specifications
         public BaseSpecifications(TKey id)
         {
             Criteria = P => P.Id.Equals(id);
+        }
+
+        private protected virtual void AddIncludes()
+        {
+            
+        }
+        private protected virtual void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression)
+        {
+            OrderBy = orderByExpression;
+        }
+        private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>> orderByExpressionDesc)
+        {
+            OrderBy = orderByExpressionDesc;
         }
     }
 }
