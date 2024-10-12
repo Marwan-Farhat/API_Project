@@ -39,6 +39,10 @@ namespace Demo.Infrastructure.Persistence.Repositories
         {
             return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();
+        }
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
         public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
@@ -48,7 +52,7 @@ namespace Demo.Infrastructure.Persistence.Repositories
         private IQueryable<TEntity> ApplySpecifications(ISpecifications<TEntity,TKey> spec)
         {
             return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec); 
-        }
+        }       
 
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Demo.Core.Application.Abstraction.Common;
 using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services.Products;
 using Demo.Core.Domain;
@@ -16,13 +17,16 @@ namespace Demo.Core.Application.Services.Products
 {
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specParams)
+        public async Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specParams)
         {
             var spec = new ProductWithBrandAndCategorySpecifications(specParams.Sort, specParams.BrandId, specParams.CategoryId, specParams.PageSize, specParams.PageIndex);
 
             var products = await unitOfWork.GetRepository<Product, int>().GetAllWithSpecAsync(spec);
             var productsToReturn = mapper.Map<IEnumerable<ProductToReturnDto>>(products);
-            return productsToReturn;
+
+            var countSpec = new ProductWithFilterationForCountSpecifications(specParams.BrandId, specParams.CategoryId);
+            var count = await unitOfWork.GetRepository<Product, int>().GetCountAsync(countSpec);
+            return new Pagination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize,count) { Data = productsToReturn };
         }
         public async Task<ProductToReturnDto> GetProductAsync(int id)
         {

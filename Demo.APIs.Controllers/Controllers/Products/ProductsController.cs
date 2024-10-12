@@ -1,4 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
+using Demo.Core.Application.Abstraction.Common;
 using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace Demo.APIs.Controllers.Controllers.Products
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
         [HttpGet]  // GET: /api/products
-        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)  // [FromQuery] Because values we receive from Query Params from URL and here the data add to an object
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)  // [FromQuery] Because values we receive from Query Params from URL and here the data add to an object
         {
             var products = await serviceManager.ProductService.GetProductsAsync(specParams);
             return Ok(products);

@@ -1,4 +1,5 @@
-﻿using Demo.Core.Application.Abstraction.Models.Products;
+﻿using Demo.Core.Application.Abstraction.Common;
+using Demo.Core.Application.Abstraction.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Demo.Core.Application.Abstraction.Services.Products
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specParams);
+        Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductSpecParams specParams);
         Task<ProductToReturnDto> GetProductAsync(int id);
         Task<IEnumerable<BrandDto>> GetBrandsAsync();
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();

@@ -12,6 +12,7 @@ namespace Demo.Core.Domain.Contracts
         Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity,TKey> spec, bool withTracking = false);
         Task<TEntity?> GetAsync(TKey id);
         Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec);
+        Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec);
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
