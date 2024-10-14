@@ -16,15 +16,25 @@ namespace Demo.Infrastructure.Persistence.Repositories.Generic_Repository
         {
             var query = inputQuery;  // _dbContext.Set<TEntity>()
 
+            // Criteria expression
             if (spec.Criteria is not null)     // spec.Criteria --> P=>P.Id.Equals(1)
                 query.Where(spec.Criteria);   //   _dbContext.Set<TEntity>().where(P=>P.Id.Equals(1))
 
+
+            // Order expression
+            if (spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc);
+            else if (spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
+
+
+            // Pagination
+            if (spec.IsPaginationEnabled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
+
             // include expression
-            // 1. P=>P.Brand
-            // 2. P=>P.Category
-
-            query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
-
+            query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));            
             // query =  _dbContext.Set<TEntity>().Include(P=>P.Brand)
             // query =  _dbContext.Set<TEntity>().Include(P=>P.Brand).Include(P=>P.Category)
 
