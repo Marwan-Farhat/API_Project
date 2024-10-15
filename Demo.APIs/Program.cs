@@ -50,7 +50,9 @@ namespace Demo.APIs
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.MapControllers(); 
+            app.MapControllers();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             #endregion
 
