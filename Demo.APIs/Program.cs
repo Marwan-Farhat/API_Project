@@ -6,6 +6,8 @@ using Demo.Core.Domain.Contracts;
 using Demo.Infrastructure.Persistence;
 using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
+using Demo.APIs.Controllers.Errors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.APIs
 {
@@ -18,7 +20,22 @@ namespace Demo.APIs
             #region Configure Services
            
             builder.Services.AddControllers()       // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
-                             .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // Make API Project to know that Controller in another project and give it Assembly Information of that project
+                            .ConfigureApiBehaviorOptions(options=>
+                            {
+                                options.SuppressModelStateInvalidFilter = false;
+                                options.InvalidModelStateResponseFactory = (actionContext) =>
+                                {
+                                    var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
+                                   .SelectMany(P => P.Value!.Errors)
+                                   .Select(E => E.ErrorMessage);
+
+                                    return new BadRequestObjectResult(new ApiValidationErrorResponse()
+                                    {
+                                        Errors = errors
+                                    });
+                                };
+                            }) 
+                            .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly); // Make API Project to know that Controller in another project and give it Assembly Information of that project
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
