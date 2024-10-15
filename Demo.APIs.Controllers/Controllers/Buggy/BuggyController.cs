@@ -1,4 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
+using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,21 +15,21 @@ namespace Demo.APIs.Controllers.Controllers.Buggy
         [HttpGet("notfound")]  // Get: /api/buggy/notfound
         public IActionResult GetNotFoundRequest() 
         {
-            return NotFound(new {StatusCode=404,Message= "Not Found" });  // 404
+            return NotFound(new ApiResponse(404));  // 404
         }
 
 
         [HttpGet("unauthorized")] // Get: /api/buggy/unauthorized
         public IActionResult GetAuthorizedrError()
         {
-            return Unauthorized(new { StatusCode = 401, Message = "Unauthorized" });  // 401
+            return Unauthorized(new ApiResponse(401));  // 401
         }
 
 
         [HttpGet("badrequest")]  // Get: /api/buggy/badrequest 
         public IActionResult GetBadRequest()
         {
-            return BadRequest(new { StatusCode = 400, Message = "Bad Request" });  // 400
+            return BadRequest(new ApiResponse(400));  // 400
         }
 
 
