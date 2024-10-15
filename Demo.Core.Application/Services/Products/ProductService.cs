@@ -26,6 +26,7 @@ namespace Demo.Core.Application.Services.Products
 
             var countSpec = new ProductWithFilterationForCountSpecifications(specParams.BrandId, specParams.CategoryId, specParams.Search);
             var count = await unitOfWork.GetRepository<Product, int>().GetCountAsync(countSpec);
+
             return new Pagination<ProductToReturnDto>(specParams.PageIndex, specParams.PageSize,count) { Data = productsToReturn };
         }
         public async Task<ProductToReturnDto> GetProductAsync(int id)
