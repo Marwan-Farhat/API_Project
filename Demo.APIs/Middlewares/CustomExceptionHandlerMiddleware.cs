@@ -24,6 +24,12 @@ namespace Demo.APIs.Middlewares
                 // Logic Executed with the Request
                 await _next(httpContext);
                 // Logic Executed with the Response
+
+                //if(httpContext.Response.StatusCode == (int)HttpStatusCode.NotFound)
+                //{
+                //    var response = new ApiResponse((int)HttpStatusCode.NotFound, $"The Requested endpoint: {httpContext.Request.Path} is not found");
+                //    await httpContext.Response.WriteAsync(response.ToString());
+                //}
             }
             catch (Exception ex) {
 

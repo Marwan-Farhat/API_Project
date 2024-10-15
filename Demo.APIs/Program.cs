@@ -69,6 +69,7 @@ namespace Demo.APIs
             }
 
             app.UseHttpsRedirection();
+            app.UseStatusCodePagesWithReExecute("/Errors/{Code}");
             app.UseStaticFiles();
             app.MapControllers();
             app.UseAuthentication();
