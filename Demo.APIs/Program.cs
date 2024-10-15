@@ -8,6 +8,7 @@ using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Mvc;
+using Demo.APIs.Middlewares;
 
 namespace Demo.APIs
 {
@@ -57,6 +58,8 @@ namespace Demo.APIs
             #endregion
 
             #region Configure Kestrel Middlwares
+
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
