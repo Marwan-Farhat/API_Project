@@ -42,7 +42,7 @@ namespace Demo.Core.Domain.Specifications
         }
         private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>> orderByExpressionDesc)
         {
-            OrderBy = orderByExpressionDesc;
+            OrderByDesc = orderByExpressionDesc;
         }
         private protected void ApplyPagination(int skip,int take)
         {
