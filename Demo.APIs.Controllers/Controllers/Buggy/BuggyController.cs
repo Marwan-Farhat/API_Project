@@ -1,6 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
 using Demo.APIs.Controllers.Errors;
-using Demo.APIs.Controllers.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,8 +15,8 @@ namespace Demo.APIs.Controllers.Controllers.Buggy
         [HttpGet("notfound")]  // Get: /api/buggy/notfound
         public IActionResult GetNotFoundRequest() 
         {
-            throw new NotFoundException();
-            // return NotFound(new ApiResponse(404));  // 404
+            // throw new NotFoundException();
+             return NotFound(new ApiResponse(404));  // 404
         }
 
 

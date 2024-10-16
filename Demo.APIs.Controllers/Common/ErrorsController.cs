@@ -23,7 +23,7 @@ namespace Demo.APIs.Controllers.Common
                 var response = new ApiResponse((int)HttpStatusCode.NotFound, $"The Requested endpoint: {Request.Path} is not found");
                 return NotFound(response);
             }
-            return StatusCode(Code);
+            return StatusCode(Code,new ApiResponse(Code));
         }
     }
 }

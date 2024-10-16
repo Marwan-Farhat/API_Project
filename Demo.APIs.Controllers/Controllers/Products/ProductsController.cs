@@ -25,10 +25,6 @@ namespace Demo.APIs.Controllers.Controllers.Products
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var product = await serviceManager.ProductService.GetProductAsync(id);
-
-            if (product is null)
-                return NotFound(new ApiResponse(404,$"The Product with Id {id} is not found."));
-
             return Ok(product);
         }
 

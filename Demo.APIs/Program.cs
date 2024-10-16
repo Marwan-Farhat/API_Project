@@ -27,8 +27,11 @@ namespace Demo.APIs
                                 options.InvalidModelStateResponseFactory = (actionContext) =>
                                 {
                                     var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-                                   .SelectMany(P => P.Value!.Errors)
-                                   .Select(E => E.ErrorMessage);
+                                                                         .Select(P=> new ApiValidationErrorResponse.ValidationError()
+                                                                         {
+                                                                             Field=P.Key,
+                                                                             Errors=P.Value!.Errors.Select(E=>E.ErrorMessage)
+                                                                         });
 
                                     return new BadRequestObjectResult(new ApiValidationErrorResponse()
                                     {
@@ -59,7 +62,7 @@ namespace Demo.APIs
 
             #region Configure Kestrel Middlwares
 
-            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -69,7 +72,7 @@ namespace Demo.APIs
             }
 
             app.UseHttpsRedirection();
-            app.UseStatusCodePagesWithReExecute("/Errors/{Code}");
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseStaticFiles();
             app.MapControllers();
             app.UseAuthentication();
