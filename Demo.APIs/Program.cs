@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Demo.APIs.Middlewares;
-
+using Demo.Infrastructure;
 namespace Demo.APIs
 {
     public class Program
@@ -49,7 +49,7 @@ namespace Demo.APIs
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
-
+            builder.Services.AddInfrastructureServices(builder.Configuration);
             #endregion
 
             var app = builder.Build();

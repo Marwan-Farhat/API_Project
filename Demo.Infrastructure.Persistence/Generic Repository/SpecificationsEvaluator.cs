@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Infrastructure.Persistence.Repositories.Generic_Repository
+namespace Demo.Infrastructure.Persistence.Generic_Repository
 {
     internal static class SpecificationsEvaluator<TEntity, TKey>
          where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
