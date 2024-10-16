@@ -12,7 +12,7 @@ namespace Demo.Core.Application.Abstraction.Models.Basket
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Product name is Required")]
         public required string ProductName { get; set; }
         public string? PictureUrl { get; set; }
 
@@ -23,7 +23,8 @@ namespace Demo.Core.Application.Abstraction.Models.Basket
         [Required]
         [Range(.1, double.MaxValue, ErrorMessage = "Quantity Must be at least one item.")]
         public int Quantity { get; set; }
-        public int? BrandId { get; set; }
         public string? Brand { get; set; }
+        public string? Category { get; set; }
+
     }
 }

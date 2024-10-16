@@ -13,7 +13,8 @@ namespace Demo.Core.Domain.Entities.Basket
         public string? PictureUrl { get; set; }
         public decimal Price { get; set; }  // this price is the price of the product as an item in this basket (after Discount not original product price) 
         public int Quantity { get; set; }
-        public int? BrandId { get; set; }
         public string? Brand { get; set; }
+        public string? Category { get; set; }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Demo.Core.Domain.Contracts.Infrastructure;
+using Demo.Infrastructure.Basket_Repository;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using System;
@@ -18,6 +20,8 @@ namespace Demo.Infrastructure
                 var connectionString = configuration.GetConnectionString("Redis");
                 return ConnectionMultiplexer.Connect(connectionString!);
             });
+
+            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 
             return services;
         }
