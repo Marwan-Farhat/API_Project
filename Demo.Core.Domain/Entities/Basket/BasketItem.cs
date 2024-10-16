@@ -11,7 +11,7 @@ namespace Demo.Core.Domain.Entities.Basket
         public int Id { get; set; }
         public required string ProductName { get; set; }
         public string? PictureUrl { get; set; }
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }  // this price is the price of the product as an item in this basket (after Discount not original product price) 
         public int Quantity { get; set; }
         public int? BrandId { get; set; }
         public string? Brand { get; set; }

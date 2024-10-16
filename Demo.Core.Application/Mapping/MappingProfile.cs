@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Demo.Core.Application.Abstraction.Models.Basket;
 using Demo.Core.Application.Abstraction.Models.Employees;
 using Demo.Core.Application.Abstraction.Models.Products;
+using Demo.Core.Domain.Entities.Basket;
 using Demo.Core.Domain.Entities.Employees;
 using Demo.Core.Domain.Entities.Products;
 using System;
@@ -23,10 +25,12 @@ namespace Demo.Core.Application.Mapping
 
 
             CreateMap<ProductBrand, BrandDto>();
-
             CreateMap<ProductCategory, CategoryDto>();
 
             CreateMap<Employee, EmployeeToReturnDto>();
+
+            CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>().ReverseMap();
         }
     }
 }
