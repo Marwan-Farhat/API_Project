@@ -1,4 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
+using Demo.APIs.Controllers.Errors;
 using Demo.Core.Application.Abstraction.Common;
 using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services;
@@ -24,10 +25,6 @@ namespace Demo.APIs.Controllers.Controllers.Products
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var product = await serviceManager.ProductService.GetProductAsync(id);
-
-            if (product is null)
-                return NotFound(new {statusCode=404,message="not found"});
-
             return Ok(product);
         }
 

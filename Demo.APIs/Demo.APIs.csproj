@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Demo.Core.Application.Abstraction\Demo.Core.Application.Abstraction.csproj" />
     <ProjectReference Include="..\Demo.Core.Application\Demo.Core.Application.csproj" />
     <ProjectReference Include="..\Demo.Infrastructure.Persistence\Demo.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Demo.Infrastructure\Demo.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

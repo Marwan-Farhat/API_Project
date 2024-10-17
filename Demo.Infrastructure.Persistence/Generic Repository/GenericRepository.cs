@@ -1,16 +1,9 @@
 ﻿using Demo.Core.Domain.Common;
 using Demo.Core.Domain.Contracts;
-using Demo.Core.Domain.Entities.Products;
 using Demo.Infrastructure.Persistence.Data;
-using Demo.Infrastructure.Persistence.Repositories.Generic_Repository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Demo.Infrastructure.Persistence.Repositories
+namespace Demo.Infrastructure.Persistence.Generic_Repository
 {
     internal class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {

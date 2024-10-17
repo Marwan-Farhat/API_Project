@@ -1,4 +1,5 @@
-﻿using Demo.Core.Application.Abstraction.Services.Products;
+﻿using Demo.Core.Application.Abstraction.Services.Basket;
+using Demo.Core.Application.Abstraction.Services.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Demo.Core.Application.Abstraction.Services
     public interface IServiceManager
     {
         public IProductService ProductService { get; }
+        public IBasketService BasketService { get; }
+        
     }
 }

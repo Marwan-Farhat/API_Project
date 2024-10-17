@@ -2,6 +2,7 @@
 using Demo.Core.Application.Abstraction.Common;
 using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services.Products;
+using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Products;
@@ -32,8 +33,12 @@ namespace Demo.Core.Application.Services.Products
         public async Task<ProductToReturnDto> GetProductAsync(int id)
         {
             var spec = new ProductWithBrandAndCategorySpecifications(id);
-
             var product = await unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
+
+            // To Handle NotFoundException
+            if (product is null)
+                throw new NotFoundException(nameof(Product),id);
+
             var productToReturn = mapper.Map<ProductToReturnDto>(product);
             return productToReturn;
         }
