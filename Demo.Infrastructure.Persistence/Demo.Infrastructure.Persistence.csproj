@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
   </ItemGroup>
@@ -18,6 +14,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Demo.Core.Application.Abstraction\Demo.Core.Application.Abstraction.csproj" />
     <ProjectReference Include="..\Demo.Core.Domain\Demo.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="_Identity\Interceptors\" />
+    <Folder Include="_Identity\Migrations\" />
+    <Folder Include="_Identity\Seeds\" />
   </ItemGroup>
 
 </Project>

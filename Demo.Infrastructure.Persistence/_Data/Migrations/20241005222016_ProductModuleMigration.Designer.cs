@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Demo.Infrastructure.Persistence.Data.Migrations
 {
-    [DbContext(typeof(StoreContext))]
+    [DbContext(typeof(StoreDbContext))]
     [Migration("20241005222016_ProductModuleMigration")]
     partial class ProductModuleMigration
     {

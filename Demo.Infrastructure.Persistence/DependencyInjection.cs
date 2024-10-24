@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Contracts.Persistence;
+using Demo.Infrastructure.Persistence._Identity;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +13,31 @@ namespace Demo.Infrastructure.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<StoreContext>((optionsBuilder) =>
+            #region Store Context
+
+            services.AddDbContext<StoreDbContext>((optionsBuilder) =>
+                {
+                    optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                });
+
+            services.AddScoped<IStoreContextInitializer, StoreDbInitializer>();
+            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+
+            #endregion
+
+            #region Identity Context
+
+            services.AddDbContext<StoreIdentityDbContext>((optionsBuilder) =>
             {
                 optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
             });
 
-            services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
-            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            #endregion
+
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
             return services;

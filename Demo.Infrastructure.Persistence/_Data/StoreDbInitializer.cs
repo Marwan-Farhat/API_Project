@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence.Data
 {
-    internal class StoreContextInitializer : IStoreContextInitializer
+    internal class StoreDbInitializer : IStoreContextInitializer
     {
-        private readonly StoreContext _dbContext;
-        public StoreContextInitializer(StoreContext dbContext)
+        private readonly StoreDbContext _dbContext;
+        public StoreDbInitializer(StoreDbContext dbContext)
         {
            _dbContext = dbContext;
         }
