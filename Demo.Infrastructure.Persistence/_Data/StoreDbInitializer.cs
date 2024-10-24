@@ -1,5 +1,6 @@
-﻿using Demo.Core.Domain.Contracts.Persistence;
+﻿using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
 using Demo.Core.Domain.Entities.Products;
+using Demo.Infrastructure.Persistence._Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,11 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence.Data
 {
-    internal class StoreDbInitializer : IStoreContextInitializer
+    internal class StoreDbInitializer(StoreDbContext _dbContext) : DbInitializer(_dbContext), IStoreDbInitializer
     {
-        private readonly StoreDbContext _dbContext;
-        public StoreDbInitializer(StoreDbContext dbContext)
-        {
-           _dbContext = dbContext;
-        }
+        // We Inherited InitializeAsync from DbInitializer
 
-        public async Task InitializeAsync()
-        {
-            var pendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();  // Will Send a request to get if there is any pending Migrations
-
-            if (pendingMigrations.Any())
-                await _dbContext.Database.MigrateAsync();            // Update Database
-        }
-        public async Task SeedAsync()
+        public override async Task SeedAsync()
         {
             if (!_dbContext.Brands.Any())
             {

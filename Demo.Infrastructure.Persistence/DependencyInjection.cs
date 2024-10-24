@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Contracts.Persistence;
+using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
 using Demo.Infrastructure.Persistence._Identity;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Data.Interceptors;
@@ -22,7 +23,7 @@ namespace Demo.Infrastructure.Persistence
                     .UseSqlServer(configuration.GetConnectionString("StoreContext"));
                 });
 
-            services.AddScoped<IStoreContextInitializer, StoreDbInitializer>();
+            services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
             services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
             #endregion
@@ -35,6 +36,8 @@ namespace Demo.Infrastructure.Persistence
                 .UseLazyLoadingProxies()
                 .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
             });
+
+            services.AddScoped(typeof(IStoreIdentityDbInitializer), typeof(StoreIdentityDbInitializer));
 
             #endregion
 
