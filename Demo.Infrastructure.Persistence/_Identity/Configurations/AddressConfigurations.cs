@@ -1,5 +1,5 @@
 ﻿using Demo.Core.Domain.Identity;
-using Demo.Infrastructure.Persistence._Common;
+using Demo.Infrastructure.Persistence.Common;
 using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Infrastructure.Persistence._Identity.Configurations
+namespace Demo.Infrastructure.Persistence.Identity.Configurations
 {
     [DbContextType(typeof(StoreIdentityDbContext))]
     internal class AddressConfigurations : IEntityTypeConfiguration<Address>

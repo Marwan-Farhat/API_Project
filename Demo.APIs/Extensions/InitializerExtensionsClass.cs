@@ -4,7 +4,7 @@ namespace Demo.APIs.Extensions
 {
     public static class InitializerExtensionsClass
     {
-        public static async Task<WebApplication> InitializeStoreContextAsync(this WebApplication app)
+        public static async Task<WebApplication> InitializeDbAsync(this WebApplication app)
         {
             using var scope = app.Services.CreateAsyncScope();             // To Create a scoped Request Explicitly
             var services = scope.ServiceProvider;                          // ServiceProvider method provide for me scoped services to choose 

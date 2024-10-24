@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Infrastructure.Persistence._Common
+namespace Demo.Infrastructure.Persistence.Common
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class DbContextTypeAttribute:Attribute

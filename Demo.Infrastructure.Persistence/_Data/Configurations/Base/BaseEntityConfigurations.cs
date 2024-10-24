@@ -1,5 +1,5 @@
 ﻿using Demo.Core.Domain.Common;
-using Demo.Infrastructure.Persistence._Common;
+using Demo.Infrastructure.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Infrastructure.Persistence._Common
+namespace Demo.Infrastructure.Persistence.Common
 {
     internal abstract class DbInitializer(DbContext _dbContext) : IDbInitializer
     {

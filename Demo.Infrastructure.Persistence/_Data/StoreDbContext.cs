@@ -1,5 +1,5 @@
 ﻿using Demo.Core.Domain.Entities.Products;
-using Demo.Infrastructure.Persistence._Common;
+using Demo.Infrastructure.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
