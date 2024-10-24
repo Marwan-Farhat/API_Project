@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Entities.Products;
+using Demo.Infrastructure.Persistence._Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,10 @@ namespace Demo.Infrastructure.Persistence.Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
+            builder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
+                    type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreDbContext));
         }
 
         public DbSet<Product> Products { get; set; }

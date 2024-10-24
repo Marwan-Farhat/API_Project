@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Identity;
+using Demo.Infrastructure.Persistence._Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence._Identity.Configurations
 {
+    [DbContextType(typeof(StoreIdentityDbContext))]
+
     internal class ApplicationUserConfigurations : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)

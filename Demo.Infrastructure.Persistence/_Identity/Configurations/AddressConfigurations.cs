@@ -1,4 +1,6 @@
 ﻿using Demo.Core.Domain.Identity;
+using Demo.Infrastructure.Persistence._Common;
+using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence._Identity.Configurations
 {
+    [DbContextType(typeof(StoreIdentityDbContext))]
     internal class AddressConfigurations : IEntityTypeConfiguration<Address>
     {
         public void Configure(EntityTypeBuilder<Address> builder)
