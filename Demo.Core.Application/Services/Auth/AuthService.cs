@@ -89,7 +89,7 @@ namespace Demo.Core.Application.Services.Auth
 
 
             // Build Secret Security Key
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-256-bit-secret"));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-256-bit-secretttttttttttttttttttttttt"));
             // Build Signing Credentials
             var signingCredentials = new SigningCredentials(symmetricSecurityKey,SecurityAlgorithms.HmacSha256);
 
