@@ -12,8 +12,7 @@ namespace Demo.APIs.Controllers.Errors
 
         public ApiValidationErrorResponse(string? message=null)
             :base(400, message)
-        {
-            
+        {           
         }
 
         public class ValidationError

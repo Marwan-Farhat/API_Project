@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Exceptions
 {
-    public class BadRequestException:ApplicationException
+    public class UnAuthorizedException:ApplicationException
     {
-        public BadRequestException(string? message=null)
+        public UnAuthorizedException(string message)
             :base(message)
         {
             
