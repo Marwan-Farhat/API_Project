@@ -3,7 +3,11 @@ using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Services.Auth;
 using Demo.Core.Domain.Identity;
 using Demo.Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
+using System.Text;
 
 namespace Demo.APIs.Extensions
 {
@@ -37,13 +41,34 @@ namespace Demo.APIs.Extensions
                 // identityOptions.ClaimsIdentity
                 // identityOptions.Tokens
             })
-                        .AddEntityFrameworkStores<StoreIdentityDbContext>();
+                    .AddEntityFrameworkStores<StoreIdentityDbContext>();
 
             services.AddScoped(typeof(IAuthService), typeof(AuthService));
             services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>
             {
                 return () => serviceProvider.GetRequiredService<IAuthService>();
             });
+
+            services.AddAuthentication((authenticationOptions) =>
+            { 
+                authenticationOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // JwtBearerDefaults.AuthenticationScheme == Bearer
+                // authenticationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer((configurationOptions) =>
+                {
+                    configurationOptions.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience=true,
+                        ValidateIssuer=true,
+                        ValidateIssuerSigningKey=true,
+                        ValidateLifetime=true,
+
+                        ClockSkew=TimeSpan.FromMinutes(0),
+                        ValidIssuer = configuration["jwtSettings:Issuer"],
+                        ValidAudience = configuration["jwtSettings:Audience"],
+                        IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["jwtSettings:Key"]!))
+                    };
+                });
 
             return services;
         }

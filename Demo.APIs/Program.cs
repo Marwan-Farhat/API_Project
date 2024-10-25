@@ -81,9 +81,11 @@ namespace Demo.APIs
             app.UseHttpsRedirection();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseStaticFiles();
-            app.MapControllers();
+            
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapControllers();
 
             #endregion
 
