@@ -1,4 +1,6 @@
-﻿using Demo.Core.Domain.Identity;
+﻿using Demo.Core.Application.Abstraction.Services.Auth;
+using Demo.Core.Application.Services.Auth;
+using Demo.Core.Domain.Identity;
 using Demo.Infrastructure.Persistence.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -33,6 +35,12 @@ namespace Demo.APIs.Extensions
                 // identityOptions.Tokens
             })
                         .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
+            services.AddScoped(typeof(IAuthService), typeof(AuthService));
+            services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>
+            {
+                return () => serviceProvider.GetRequiredService<IAuthService>();
+            });
 
             return services;
         }

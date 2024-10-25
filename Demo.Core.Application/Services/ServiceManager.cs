@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Demo.Core.Application.Abstraction.Services;
+using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Abstraction.Services.Basket;
 using Demo.Core.Application.Abstraction.Services.Employees;
 using Demo.Core.Application.Abstraction.Services.Products;
+using Demo.Core.Application.Services.Auth;
 using Demo.Core.Application.Services.Basket;
 using Demo.Core.Application.Services.Employees;
 using Demo.Core.Application.Services.Products;
@@ -25,8 +27,9 @@ namespace Demo.Core.Application.Services
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IEmployeeService> _employeeService;
         private readonly Lazy<IBasketService> _basketService;
+        private readonly Lazy<IAuthService> _authService;
 
-        public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper,IConfiguration configuration,Func<IBasketService> basketServiceFactory)
+        public ServiceManager(IUnitOfWork unitOfWork, IMapper mapper,IConfiguration configuration,Func<IBasketService> basketServiceFactory, Func<IAuthService> authServiceFactory)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -34,10 +37,12 @@ namespace Demo.Core.Application.Services
 
             _productService = new Lazy<IProductService>(() => new ProductService(_unitOfWork, _mapper));
             _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(_unitOfWork, _mapper));
-            _basketService = new Lazy<IBasketService>(basketServiceFactory);
+            _basketService = new Lazy<IBasketService>(basketServiceFactory,LazyThreadSafetyMode.ExecutionAndPublication);
+            _authService = new Lazy<IAuthService>(authServiceFactory, LazyThreadSafetyMode.ExecutionAndPublication);
         }
         public IProductService ProductService => _productService.Value;
         public IEmployeeService EmployeeService => _employeeService.Value;
         public IBasketService BasketService => _basketService.Value;
+        public IAuthService AuthService => _authService.Value;
     }
 }

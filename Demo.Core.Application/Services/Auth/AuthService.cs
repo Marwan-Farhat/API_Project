@@ -3,15 +3,14 @@ using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Services.Auth
 {
-    internal class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
+    public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
     {
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
@@ -33,10 +32,10 @@ namespace Demo.Core.Application.Services.Auth
             // If he pass all this validation then he has an account with the email he entered and the password is true
             var response = new UserDto()
             {
-                Id=user.Id,
-                DisplayName=user.DisplayName,
-                Email=user.Email!,
-                Token="This will be Token"
+                Id = user.Id,
+                DisplayName = user.DisplayName,
+                Email = user.Email!,
+                Token = await GenerateTokenAsync(user)
             };
             return response;
         }
@@ -60,9 +59,51 @@ namespace Demo.Core.Application.Services.Auth
                 Id = user.Id,
                 DisplayName = user.DisplayName,
                 Email = user.Email!,
-                Token = "This will be Token"
+                Token = await GenerateTokenAsync(user)
             };
             return response;
+        }
+
+        private async Task<string> GenerateTokenAsync(ApplicationUser user)
+        {
+            // To Get User Claims from Database if there is User Claims
+            var userClaims = await userManager.GetClaimsAsync(user);
+
+
+            // To Get User roles from Database to store it as a claims and send it as a claims in token, if Frontend need to know user roles he will find it in the Token
+            var rolesAsClaims = new List<Claim>();
+            var roles =await userManager.GetRolesAsync(user);
+            foreach (var role in roles) 
+                rolesAsClaims.Add(new Claim(ClaimTypes.Role,role.ToString()));
+
+
+            // Create Claims this not all claims i will send
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.PrimarySid,user.Id),
+                new Claim(ClaimTypes.Email,user.Email!),
+                new Claim(ClaimTypes.GivenName,user.DisplayName)
+            }
+               .Union(userClaims)
+               .Union(rolesAsClaims);
+
+
+            // Build Secret Security Key
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-256-bit-secret"));
+            // Build Signing Credentials
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey,SecurityAlgorithms.HmacSha256);
+
+
+            // Finaly Build Token with claims and Signing Credentials
+            var tokenObj = new JwtSecurityToken(
+                issuer: "TalabatIdentity",
+                audience: "TalabatUsers",
+                expires: DateTime.UtcNow.AddMinutes(10),
+                claims: claims,
+                signingCredentials: signingCredentials
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(tokenObj);
         }
     }
 }
