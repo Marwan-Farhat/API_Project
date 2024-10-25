@@ -3,6 +3,8 @@ using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,8 +12,9 @@ using System.Text;
 
 namespace Demo.Core.Application.Services.Auth
 {
-    public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
+    public class AuthService(IOptions<JwtSettings> jwtSettings,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
     {
+        private readonly JwtSettings _jwtSettings= jwtSettings.Value;
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
             // To validate if the user has an account or not by Email if hasn't an UnAuthorizedException will be thrown
@@ -89,16 +92,16 @@ namespace Demo.Core.Application.Services.Auth
 
 
             // Build Secret Security Key
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-256-bit-secretttttttttttttttttttttttt"));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             // Build Signing Credentials
             var signingCredentials = new SigningCredentials(symmetricSecurityKey,SecurityAlgorithms.HmacSha256);
 
 
             // Finaly Build Token with claims and Signing Credentials
             var tokenObj = new JwtSecurityToken(
-                issuer: "TalabatIdentity",
-                audience: "TalabatUsers",
-                expires: DateTime.UtcNow.AddMinutes(10),
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
                 claims: claims,
                 signingCredentials: signingCredentials
                 );

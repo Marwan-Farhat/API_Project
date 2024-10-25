@@ -55,7 +55,7 @@ namespace Demo.APIs
             builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
             builder.Services.AddInfrastructureServices(builder.Configuration);
 
-            builder.Services.AddIdentityServices();
+            builder.Services.AddIdentityServices(builder.Configuration);
 
             #endregion
 

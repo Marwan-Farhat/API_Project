@@ -1,4 +1,5 @@
-﻿using Demo.Core.Application.Abstraction.Services.Auth;
+﻿using Demo.Core.Application.Abstraction.Models.Auth;
+using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Services.Auth;
 using Demo.Core.Domain.Identity;
 using Demo.Infrastructure.Persistence.Identity;
@@ -8,8 +9,10 @@ namespace Demo.APIs.Extensions
 {
     public static class IdentityExtensions
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<JwtSettings>(configuration.GetSection("jwtSettings"));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(identityOptions =>
             {
                 identityOptions.User.RequireUniqueEmail = true;
