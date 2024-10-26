@@ -1,3 +1,4 @@
+using Demo.Infrastructure.Persistence.Identity;
 using Demo.Core.Application;
 using Demo.APIs.Extensions;
 using Demo.APIs.Services;
@@ -10,6 +11,9 @@ using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Demo.APIs.Middlewares;
 using Demo.Infrastructure;
+using Demo.Core.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
 namespace Demo.APIs
 {
     public class Program
@@ -50,13 +54,16 @@ namespace Demo.APIs
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
             builder.Services.AddInfrastructureServices(builder.Configuration);
+
+            builder.Services.AddIdentityServices(builder.Configuration);
+
             #endregion
 
             var app = builder.Build();
 
             #region Databases Initializer
 
-            await app.InitializeStoreContextAsync();
+            await app.InitializeDbAsync();
 
             #endregion
 
@@ -74,9 +81,11 @@ namespace Demo.APIs
             app.UseHttpsRedirection();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseStaticFiles();
-            app.MapControllers();
+            
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapControllers();
 
             #endregion
 

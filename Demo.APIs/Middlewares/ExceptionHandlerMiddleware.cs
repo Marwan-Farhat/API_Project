@@ -2,7 +2,9 @@
 using Demo.APIs.Controllers.Errors;
 using Demo.Core.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static Demo.APIs.Controllers.Errors.ApiValidationErrorResponse;
 
 namespace Demo.APIs.Middlewares
 {
@@ -24,12 +26,6 @@ namespace Demo.APIs.Middlewares
                 // Logic Executed with the Request
                 await _next(httpContext);
                 // Logic Executed with the Response
-
-                /// if(httpContext.Response.StatusCode == (int)HttpStatusCode.NotFound)
-                /// {
-                ///     var response = new ApiResponse((int)HttpStatusCode.NotFound, $"The Requested endpoint: {httpContext.Request.Path} is not found");
-                ///     await httpContext.Response.WriteAsync(response.ToString());
-                /// }
             }
             catch (Exception ex)
             {
@@ -66,12 +62,22 @@ namespace Demo.APIs.Middlewares
                     await httpContext.Response.WriteAsync(response.ToString());
                     break;
 
+                case ValidationException:
                 case BadRequestException:
 
                     httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     httpContext.Response.ContentType = "application/json";
 
                     response = new ApiResponse(400, ex.Message);
+                    await httpContext.Response.WriteAsync(response.ToString());
+                    break;
+
+                case UnAuthorizedException:
+
+                    httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    httpContext.Response.ContentType = "application/json";
+
+                    response = new ApiResponse(401, ex.Message);
                     await httpContext.Response.WriteAsync(response.ToString());
                     break;
 

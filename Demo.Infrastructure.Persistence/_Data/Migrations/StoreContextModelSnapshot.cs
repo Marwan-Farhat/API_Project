@@ -4,19 +4,16 @@ using Demo.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Demo.Infrastructure.Persistence.Data.Migrations
 {
-    [DbContext(typeof(StoreContext))]
-    [Migration("20241012222908_NormalizedNameColumnMigration")]
-    partial class NormalizedNameColumnMigration
+    [DbContext(typeof(StoreDbContext))]
+    partial class StoreContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

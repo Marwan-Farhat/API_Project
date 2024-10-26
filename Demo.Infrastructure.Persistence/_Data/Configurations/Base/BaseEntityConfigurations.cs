@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Common;
+using Demo.Infrastructure.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence.Data.Configurations.Base
 {
+    [DbContextType(typeof(StoreDbContext))]
     internal class BaseEntityConfigurations<TEntity, TKey> : IEntityTypeConfiguration<TEntity>
         where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
