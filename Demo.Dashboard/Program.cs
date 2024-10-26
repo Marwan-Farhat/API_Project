@@ -1,6 +1,9 @@
+using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Identity;
+using Demo.Dashboard.Helpers;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Identity;
+using Demo.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
@@ -41,6 +44,9 @@ namespace Demo.Dashboard
                 identityOptions.Password.RequireLowercase = true;              
             })
                             .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
+            builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            builder.Services.AddAutoMapper(typeof(MapsProfile));
 
             #endregion
 
