@@ -82,7 +82,7 @@ namespace Demo.Core.Application.Services.Orders
         public async Task<OrderToReturnDto> GetOrderByIdAsync(string buyerEmail, int orderId)
         {
             var orderSpecs = new OrderSpecifications(buyerEmail, orderId);
-            var order = await unitOfWork.GetRepository<Order, int>().GetAllWithSpecAsync(orderSpecs);
+            var order = await unitOfWork.GetRepository<Order, int>().GetWithSpecAsync(orderSpecs);
 
             if (order is null) throw new NotFoundException(nameof(Order),orderId);
             return mapper.Map<OrderToReturnDto>(order);
