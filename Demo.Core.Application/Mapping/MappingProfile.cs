@@ -37,10 +37,12 @@ namespace Demo.Core.Application.Mapping
 
             CreateMap<Order, OrderToReturnDto>()
                    .ForMember(dest => dest.DeliveryMethod, options => options.MapFrom(src => src.DeliveryMethod!.ShortName));
+
             CreateMap<OrderItem, OrderItemDto>()
                 .ForMember(dest => dest.ProductId, options => options.MapFrom(src => src.Product.Id))
                 .ForMember(dest => dest.ProductName, options => options.MapFrom(src => src.Product.ProductName))
                 .ForMember(dest => dest.PictureUrl, options => options.MapFrom<OrderItemPictureUrlResolver>());
+
             CreateMap<Address, AddressDto>();
             CreateMap<DeliveryMethod, DeliveryMethodDto>();
 
