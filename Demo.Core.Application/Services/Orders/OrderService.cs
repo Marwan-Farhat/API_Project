@@ -59,18 +59,21 @@ namespace Demo.Core.Application.Services.Orders
             // 4.Map Address
             var address = mapper.Map<Address>(order.ShippingAddress);
 
-            // 5.Create Order
+            // 5.Get Delivery Method
+            var deliveryMethod = await unitOfWork.GetRepository<DeliveryMethod, int>().GetAsync(order.DeliveryMethodId);
+
+            // 6.Create Order
             var orderTOCreate = new Order()
             {
                 BuyerEmail = buyerEmail,
                 ShippingAddress=address,
                 Items=orderItems,
                 SubTotal=subTotal,
-                DeliveryMethodId=order.DeliveryMethodId
+                DeliveryMethod= deliveryMethod
             };
             await unitOfWork.GetRepository<Order, int>().AddAsync(orderTOCreate);
 
-            // 6.Save To Database
+            // 7.Save To Database
             var created = await unitOfWork.CompleteAsync() > 0;
             if (!created) throw new BadRequestException("an error occured during creating the order");
 

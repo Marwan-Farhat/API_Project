@@ -26,7 +26,7 @@ namespace Demo.Infrastructure.Persistence
                 });
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
-            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
             #endregion
 

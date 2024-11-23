@@ -5,6 +5,7 @@ using Demo.Core.Application.Abstraction.Services.Orders;
 using Demo.Core.Application.Mapping;
 using Demo.Core.Application.Services;
 using Demo.Core.Application.Services.Basket;
+using Demo.Core.Application.Services.Orders;
 using Demo.Core.Domain.Contracts.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,7 @@ namespace Demo.Core.Application
                 return () => serviceProvider.GetRequiredService<IBasketService>();
             });
 
-            services.AddScoped(typeof(IOrderService), typeof(IOrderService));
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
             // Register the factory of Func<IBasketService>
             services.AddScoped(typeof(Func<IOrderService>), (serviceProvider) =>
             {
