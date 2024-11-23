@@ -6,6 +6,7 @@ using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Orders;
 using Demo.Core.Domain.Entities.Products;
+using Demo.Core.Domain.Specifications.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,20 +76,29 @@ namespace Demo.Core.Application.Services.Orders
 
             return mapper.Map<OrderToReturnDto>(orderTOCreate);
         }
-
-        public Task<IEnumerable<DeliveryMethodDto>> GetDeliveryMethodsAsync()
+        public async Task<OrderToReturnDto> GetOrderByIdAsync(string buyerEmail, int orderId)
         {
-            throw new NotImplementedException();
+            var orderSpecs = new OrderSpecifications(buyerEmail, orderId);
+            var order = await unitOfWork.GetRepository<Order, int>().GetAllWithSpecAsync(orderSpecs);
+
+            if (order is null) throw new NotFoundException(nameof(Order),orderId);
+            return mapper.Map<OrderToReturnDto>(order);
+
+        }
+        public async Task<IEnumerable<OrderToReturnDto>> GetOrdersForUserAsync(string buyerEmail)
+        {
+            var orderSpecs = new OrderSpecifications(buyerEmail);
+            var orders = await unitOfWork.GetRepository<Order, int>().GetAllWithSpecAsync(orderSpecs);
+
+            return mapper.Map< IEnumerable<OrderToReturnDto>>(orders);
+        }
+        public async Task<IEnumerable<DeliveryMethodDto>> GetDeliveryMethodsAsync()
+        {
+            var deliveryMethods = await unitOfWork.GetRepository<DeliveryMethod, int>().GetAllAsync();
+            return mapper.Map<IEnumerable<DeliveryMethodDto>>(deliveryMethods);
+
         }
 
-        public Task<OrderToReturnDto> GetOrderByIdAsync(string buyerEmail, int orderId)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<IEnumerable<OrderToReturnDto>> GetOrdersForUserAsync(string buyerEmail)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

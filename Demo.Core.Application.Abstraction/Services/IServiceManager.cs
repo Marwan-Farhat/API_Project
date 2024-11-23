@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Abstraction.Services.Basket;
+using Demo.Core.Application.Abstraction.Services.Orders;
 using Demo.Core.Application.Abstraction.Services.Products;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Demo.Core.Application.Abstraction.Services
 {
     public interface IServiceManager
     {
+        public IOrderService OrderService { get; }
         public IProductService ProductService { get; }
         public IBasketService BasketService { get; }
         public IAuthService AuthService { get; }

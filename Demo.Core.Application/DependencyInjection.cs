@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Demo.Core.Application.Abstraction.Services;
 using Demo.Core.Application.Abstraction.Services.Basket;
+using Demo.Core.Application.Abstraction.Services.Orders;
 using Demo.Core.Application.Mapping;
 using Demo.Core.Application.Services;
 using Demo.Core.Application.Services.Basket;
@@ -18,11 +19,19 @@ namespace Demo.Core.Application
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
 
-            /// services.AddScoped(typeof(IBasketService), typeof(BasketService));
-            /// services.AddScoped(typeof(Func<IBasketService>), typeof(Func<BasketService>));
+
+            services.AddScoped(typeof(IBasketService), typeof(BasketService));
+            // Register the factory of Func<IBasketService>
             services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
             {
                 return () => serviceProvider.GetRequiredService<IBasketService>();
+            });
+
+            services.AddScoped(typeof(IOrderService), typeof(IOrderService));
+            // Register the factory of Func<IBasketService>
+            services.AddScoped(typeof(Func<IOrderService>), (serviceProvider) =>
+            {
+                return () => serviceProvider.GetRequiredService<IOrderService>();
             });
 
             return services;
