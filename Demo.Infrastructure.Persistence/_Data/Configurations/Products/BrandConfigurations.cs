@@ -17,6 +17,8 @@ namespace Demo.Infrastructure.Persistence.Data.Configurations.Products
             base.Configure(builder);  // Base Property Configurations Inherited From BaseEntity
 
             builder.Property(B => B.Name).IsRequired();
-        }
+            builder.HasIndex(B => B.Name).IsUnique();
+
+		}
     }
 }
