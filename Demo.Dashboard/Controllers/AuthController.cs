@@ -1,11 +1,11 @@
 ﻿using Demo.Core.Application.Abstraction.Models.Auth;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Dashboard.Controllers
 {
-	public class AuthController(SignInManager<ApplicationUser> _signInManager, UserManager<ApplicationUser> _userManager) : Controller
+    public class AuthController(SignInManager<ApplicationUser> _signInManager, UserManager<ApplicationUser> _userManager) : Controller
 	{
 		public IActionResult Login()
 		{

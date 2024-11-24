@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Domain.Identity
+namespace Demo.Core.Domain.Entities.Identity
 {
     public class Address
     {

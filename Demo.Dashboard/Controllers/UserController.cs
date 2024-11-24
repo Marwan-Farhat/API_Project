@@ -1,4 +1,4 @@
-﻿using Demo.Core.Domain.Identity;
+﻿using Demo.Core.Domain.Entities.Identity;
 using Demo.Dashboard.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

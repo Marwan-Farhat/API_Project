@@ -1,7 +1,10 @@
-﻿using Demo.Core.Application.Abstraction.Models.Auth;
+﻿using AutoMapper;
+using Demo.Core.Application.Abstraction.Models.Auth;
+using Demo.Core.Application.Abstraction.Models.Common;
 using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Exceptions;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Application.Extensions;
+using Demo.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -12,24 +15,10 @@ using System.Text;
 
 namespace Demo.Core.Application.Services.Auth
 {
-    public class AuthService(IOptions<JwtSettings> jwtSettings,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
+    public class AuthService(IMapper mapper,IOptions<JwtSettings> jwtSettings,UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
     {
         private readonly JwtSettings _jwtSettings= jwtSettings.Value;
 
-        public async Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
-        {
-            var email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
-
-            var user = await userManager.FindByEmailAsync(email!);
-
-            return new UserDto()
-            {
-                Id=user!.Id,
-                Email=user.Email!,
-                DisplayName=user.DisplayName,
-                Token =await GenerateTokenAsync(user)
-            };
-        }
 
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
@@ -123,6 +112,30 @@ namespace Demo.Core.Application.Services.Auth
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(tokenObj);
+        }
+
+        public async Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal)
+        {
+            var email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
+
+            var user = await userManager.FindByEmailAsync(email!);
+
+            return new UserDto()
+            {
+                Id = user!.Id,
+                Email = user.Email!,
+                DisplayName = user.DisplayName,
+                Token = await GenerateTokenAsync(user)
+            };
+        }
+
+        public async Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await userManager.FindUserWithAddress(claimsPrincipal!);
+
+            var address = mapper.Map<AddressDto>(user!.Address);
+
+            return address;
         }
     }
 }

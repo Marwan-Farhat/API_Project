@@ -1,6 +1,6 @@
 ﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Demo.Infrastructure.Persistence._Identity;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Data.Interceptors;

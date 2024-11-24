@@ -1,5 +1,4 @@
-﻿using Demo.Core.Domain.Identity;
-using Demo.Infrastructure.Persistence.Common;
+﻿using Demo.Infrastructure.Persistence.Common;
 using Demo.Infrastructure.Persistence._Identity.Configurations;
 using Demo.Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.Core.Domain.Entities.Identity;
 
 namespace Demo.Infrastructure.Persistence.Identity
 {

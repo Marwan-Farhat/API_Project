@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Domain.Identity
+namespace Demo.Core.Domain.Entities.Identity
 {
     // ApplicationUser Inherit IdentityUser properties and here we customize and add more properties
-    public class ApplicationUser:IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public required string DisplayName { get; set; }
         public virtual Address? Address { get; set; }      // virtual : for navigational property

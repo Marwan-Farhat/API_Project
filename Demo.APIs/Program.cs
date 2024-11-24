@@ -11,7 +11,7 @@ using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Demo.APIs.Middlewares;
 using Demo.Infrastructure;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
 namespace Demo.APIs

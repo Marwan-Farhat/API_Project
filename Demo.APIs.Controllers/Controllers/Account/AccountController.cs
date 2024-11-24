@@ -1,5 +1,6 @@
 ﻿using Demo.APIs.Controllers.Base;
 using Demo.Core.Application.Abstraction.Models.Auth;
+using Demo.Core.Application.Abstraction.Models.Common;
 using Demo.Core.Application.Abstraction.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,13 @@ namespace Demo.APIs.Controllers.Controllers.Account
             var result = await serviceManager.AuthService.GetCurrentUser(User);
             return Ok(result);
         }
-           
+
+        [Authorize]
+        [HttpGet("address")] // GET: /api/account/address
+        public async Task<ActionResult<AddressDto>>GetUserAddress()
+        {
+            var result = await serviceManager.AuthService.GetUserAddress(User);
+            return Ok(result);
+        }
     }
 }
