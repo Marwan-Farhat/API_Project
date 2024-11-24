@@ -50,6 +50,10 @@ namespace Demo.Core.Application.Services.Auth
 
         public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
         {
+            /// This already done with identity Extensions Configurations (RequireUniqueEmail)
+            /// if (EmailExists(registerDto.Email).Result) // Result to skip Async as rest of code depend on this condition
+            ///     throw new BadRequestException("This email is already in use");
+
             var user = new ApplicationUser()
             {
                 DisplayName = registerDto.DisplayName,
@@ -158,6 +162,11 @@ namespace Demo.Core.Application.Services.Auth
             if (!result.Succeeded) throw new BadRequestException(result.Errors.Select(error => error.Description).Aggregate((X, Y) => $"{X}, {Y}"));
 
             return addressDto;
+        }
+
+        public async Task<bool> EmailExists(string email)
+        {   
+            return await userManager.FindByEmailAsync(email!) is not null;
         }
     }
 }
