@@ -18,14 +18,16 @@ namespace Demo.Infrastructure.Persistence
         {
             #region Store Context
 
-            services.AddDbContext<StoreDbContext>((optionsBuilder) =>
+            services.AddDbContext<StoreDbContext>((serviceProvider,optionsBuilder) =>
                 {
                     optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                    .UseSqlServer(configuration.GetConnectionString("StoreContext"))
+                    .AddInterceptors(serviceProvider.GetRequiredService<CustomSaveChangesInterceptor>());
                 });
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
+            services.AddScoped(typeof(CustomSaveChangesInterceptor));
             // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
             #endregion
