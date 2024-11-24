@@ -20,16 +20,16 @@ namespace Demo.Core.Application.Services.Auth
         private readonly JwtSettings _jwtSettings= jwtSettings.Value;
 
 
-        public async Task<UserDto> LoginAsync(LoginDto model)
+        public async Task<UserDto> LoginAsync(LoginDto loginDto)
         {
             // To validate if the user has an account or not by Email if hasn't an UnAuthorizedException will be thrown
-            var user = await userManager.FindByEmailAsync(model.Email);  
+            var user = await userManager.FindByEmailAsync(loginDto.Email);  
 
             if (user is null) throw new UnAuthorizedException("Invalid Login");
 
 
             // To validate if the user Allowed or his account LockedOut or the password wrong if the Account confirmed and not Locked and Succeeded is still false then the password is wrong
-            var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
+            var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: true);
 
             if (result.IsNotAllowed) throw new UnAuthorizedException("Account not confirmed yet");
             if (result.IsLockedOut) throw new UnAuthorizedException("Account is Locked");
@@ -48,17 +48,17 @@ namespace Demo.Core.Application.Services.Auth
             return response;
         }
 
-        public async Task<UserDto> RegisterAsync(RegisterDto model)
+        public async Task<UserDto> RegisterAsync(RegisterDto registerDto)
         {
             var user = new ApplicationUser()
             {
-                DisplayName = model.DisplayName,
-                Email = model.Email!,
-                UserName = model.UserName,
-                PhoneNumber = model.PhoneNumber,
+                DisplayName = registerDto.DisplayName,
+                Email = registerDto.Email!,
+                UserName = registerDto.UserName,
+                PhoneNumber = registerDto.PhoneNumber,
             };
 
-            var result = await userManager.CreateAsync(user,model.Password);
+            var result = await userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded) throw new ValidationException() { Errors = result.Errors.Select(E => E.Description) };
 
             // If this validation is Succeeded then his account will be created
@@ -129,13 +129,35 @@ namespace Demo.Core.Application.Services.Auth
             };
         }
 
-        public async Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal)
+        public async Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal)
         {
             var user = await userManager.FindUserWithAddress(claimsPrincipal!);
 
             var address = mapper.Map<AddressDto>(user!.Address);
 
             return address;
+        }
+
+        public async Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto)
+        {
+            // Map updated Address from AddressDto to Address
+            var updatedAddress = mapper.Map<Address>(addressDto);
+
+            // Find User With Address
+            var user = await userManager.FindUserWithAddress(claimsPrincipal!);
+
+            // Check if the user already has an address he will set the new address id with the exists address id So that he don't make another new address with new record
+            if (user?.Address is not null)
+                updatedAddress.Id = user.Address.Id;
+
+            user!.Address = updatedAddress;
+
+            // Update Address
+            var result = await userManager.UpdateAsync(user);
+
+            if (!result.Succeeded) throw new BadRequestException(result.Errors.Select(error => error.Description).Aggregate((X, Y) => $"{X}, {Y}"));
+
+            return addressDto;
         }
     }
 }

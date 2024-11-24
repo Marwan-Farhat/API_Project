@@ -44,5 +44,13 @@ namespace Demo.APIs.Controllers.Controllers.Account
             var result = await serviceManager.AuthService.GetUserAddress(User);
             return Ok(result);
         }
+
+        [Authorize]
+        [HttpPut("address")] // Put: /api/account/address
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
+        {
+            var result = await serviceManager.AuthService.UpdateUserAddress(User, address);
+            return Ok(result);
+        }
     }
 }
