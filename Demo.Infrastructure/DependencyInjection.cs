@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Infrastructure.Basket_Repository;
+using Demo.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -22,6 +23,8 @@ namespace Demo.Infrastructure
             });
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
+            services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
 
             return services;
         }
