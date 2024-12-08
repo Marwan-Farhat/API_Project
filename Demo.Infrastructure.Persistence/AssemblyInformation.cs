@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Infrastructure.Persistence
 {
-    public class AssemblyInformation
+    public static class AssemblyInformation
     {
     }
 }

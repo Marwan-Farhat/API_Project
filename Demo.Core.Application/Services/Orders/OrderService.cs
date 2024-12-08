@@ -39,7 +39,7 @@ namespace Demo.Core.Application.Services.Orders
                         {
                             Id = product.Id,
                             ProductName=product.Name,
-                            ProductUrl=product.PictureUrl?? ""
+                            PictureUrl = product.PictureUrl?? ""
                         };
 
                         var orderItem = new OrderItem()

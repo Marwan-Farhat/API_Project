@@ -22,8 +22,8 @@ namespace Demo.Core.Application.Mapping
 
         public string Resolve(OrderItem source, OrderItemDto destination, string destMember, ResolutionContext context)
         {
-            if (!string.IsNullOrEmpty(source.Product.ProductUrl))
-                return $"{_configuration["Urls:ApiBaseUrl"]}/{source.Product.ProductUrl}";
+            if (!string.IsNullOrEmpty(source.Product.PictureUrl))
+                return $"{_configuration["Urls:ApiBaseUrl"]}/{source.Product.PictureUrl}";
 
             return string.Empty;
         }
