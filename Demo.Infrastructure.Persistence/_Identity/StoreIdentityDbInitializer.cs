@@ -1,6 +1,6 @@
 ﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Demo.Infrastructure.Persistence.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

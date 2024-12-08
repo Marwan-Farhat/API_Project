@@ -11,9 +11,10 @@ using Demo.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Demo.APIs.Middlewares;
 using Demo.Infrastructure;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
+using Newtonsoft.Json;
 namespace Demo.APIs
 {
     public class Program
@@ -23,8 +24,10 @@ namespace Demo.APIs
             var builder = WebApplication.CreateBuilder(args);
 
             #region Configure Services
-           
-            builder.Services.AddControllers()       // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
+
+            builder.Services.AddControllers()     // Register Required services for Controllers by ASP.NET Core Web APIs To DI Container
+                            .AddNewtonsoftJson(options =>
+                            { options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; })
                             .ConfigureApiBehaviorOptions(options=>
                             {
                                 options.SuppressModelStateInvalidFilter = false;

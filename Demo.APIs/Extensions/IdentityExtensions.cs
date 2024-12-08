@@ -1,7 +1,7 @@
 ﻿using Demo.Core.Application.Abstraction.Models.Auth;
 using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Services.Auth;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Demo.Infrastructure.Persistence.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

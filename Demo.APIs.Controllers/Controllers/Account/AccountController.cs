@@ -1,10 +1,13 @@
 ﻿using Demo.APIs.Controllers.Base;
 using Demo.Core.Application.Abstraction.Models.Auth;
+using Demo.Core.Application.Abstraction.Models.Common;
 using Demo.Core.Application.Abstraction.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +28,36 @@ namespace Demo.APIs.Controllers.Controllers.Account
         {
             var result = await serviceManager.AuthService.RegisterAsync(model);
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet] // GET: /api/account
+        public async Task<ActionResult<UserDto>>GetCurrentUser()
+        {
+            var result = await serviceManager.AuthService.GetCurrentUser(User);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("address")] // GET: /api/account/address
+        public async Task<ActionResult<AddressDto>>GetUserAddress()
+        {
+            var result = await serviceManager.AuthService.GetUserAddress(User);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut("address")] // Put: /api/account/address
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto address)
+        {
+            var result = await serviceManager.AuthService.UpdateUserAddress(User, address);
+            return Ok(result);
+        }
+
+        [HttpGet("emailexists")] // GET: /api/account/emailexists?email=ali@gmail.com
+        public async Task<ActionResult<bool>> CheckEmailExist(string email)
+        {
+            return Ok(await serviceManager.AuthService.EmailExists(email!));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Demo.Core.Application.Abstraction;
 using Demo.Core.Domain.Common;
+using Demo.Core.Domain.Entities.Orders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
@@ -19,16 +20,16 @@ namespace Demo.Infrastructure.Persistence.Data.Interceptors
            _loggedInUserService = loggedInUserService;
         }
 
-        public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
-        {
-            UpdateEntities(eventData.Context);
-            return base.SavedChanges(eventData, result);
-        }
 
-        public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
+        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
         {
             UpdateEntities(eventData.Context);
-            return base.SavedChangesAsync(eventData, result, cancellationToken);
+            return base.SavingChanges(eventData, result);
+        }
+        public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            UpdateEntities(eventData.Context);
+            return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
         private void UpdateEntities(DbContext? dbContext)
@@ -36,9 +37,15 @@ namespace Demo.Infrastructure.Persistence.Data.Interceptors
             if (dbContext is null)
                 return;
 
-            foreach(var entry in dbContext.ChangeTracker.Entries<BaseAuditableEntity<int>>().Where(entity=>entity.State is EntityState.Added or EntityState.Modified))
+            var entries = dbContext.ChangeTracker.Entries<IBaseAuditableEntity>()
+                .Where(entity => entity.State is EntityState.Added or EntityState.Modified);
+
+            foreach (var entry in entries)
             {
-                if(entry.State is EntityState.Added)
+                /// if (entry.Entity is Order or OrderItem)  // if i need to set creates Orders or OrderItems with specific userId like admin
+                ///     _loggedInUserService.UserId = "";
+
+                if (entry.State is EntityState.Added)
                 {
                     entry.Entity.CreatedBy = _loggedInUserService.UserId!;
                     entry.Entity.CreatedOn = DateTime.UtcNow;

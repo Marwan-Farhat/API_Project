@@ -1,6 +1,6 @@
 ﻿using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Contracts.Persistence.DbInitializers;
-using Demo.Core.Domain.Identity;
+using Demo.Core.Domain.Entities.Identity;
 using Demo.Infrastructure.Persistence._Identity;
 using Demo.Infrastructure.Persistence.Data;
 using Demo.Infrastructure.Persistence.Data.Interceptors;
@@ -18,15 +18,17 @@ namespace Demo.Infrastructure.Persistence
         {
             #region Store Context
 
-            services.AddDbContext<StoreDbContext>((optionsBuilder) =>
+            services.AddDbContext<StoreDbContext>((serviceProvider,optionsBuilder) =>
                 {
                     optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                    .UseSqlServer(configuration.GetConnectionString("StoreContext"))
+                    .AddInterceptors(serviceProvider.GetRequiredService<CustomSaveChangesInterceptor>());
                 });
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
-            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            services.AddScoped(typeof(CustomSaveChangesInterceptor));
+            // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
             #endregion
 

@@ -1,4 +1,4 @@
-﻿using Demo.Core.Domain.Identity;
+﻿using Demo.Core.Domain.Entities.Identity;
 using Demo.Infrastructure.Persistence.Common;
 using Demo.Infrastructure.Persistence.Identity;
 using Microsoft.EntityFrameworkCore;
