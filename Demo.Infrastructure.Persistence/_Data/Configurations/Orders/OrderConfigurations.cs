@@ -15,6 +15,7 @@ namespace Demo.Infrastructure.Persistence._Data.Configurations.Orders
         public override void Configure(EntityTypeBuilder<Order> builder)
         {
             base.Configure(builder);
+
             builder.OwnsOne(order => order.ShippingAddress, shippingAddress => shippingAddress.WithOwner());
 
             builder.Property(order => order.Status)

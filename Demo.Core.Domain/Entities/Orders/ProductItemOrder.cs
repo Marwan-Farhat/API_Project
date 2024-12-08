@@ -10,7 +10,7 @@ namespace Demo.Core.Domain.Entities.Orders
     {
         public int Id { get; set; }
         public required string ProductName { get; set; }
-        public required string ProductUrl { get; set; }
+        public required string PictureUrl { get; set; }
 
     }
 }

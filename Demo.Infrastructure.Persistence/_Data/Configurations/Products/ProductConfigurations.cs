@@ -25,6 +25,7 @@ namespace Demo.Infrastructure.Persistence.Data.Configurations.Products
                    .WithMany()
                    .HasForeignKey(P => P.BrandId)
                    .OnDelete(DeleteBehavior.SetNull);
+
             builder.HasOne(P => P.Category)
                    .WithMany()
                    .HasForeignKey(P => P.CategoryId)

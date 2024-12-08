@@ -51,7 +51,7 @@ namespace Demo.APIs
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for DbContext
+            builder.Services.AddPersistenceServices(builder.Configuration); // Register DependencyInjection for Persistence Layer (DbContext)
             builder.Services.AddApplicationServices();
 
             builder.Services.AddHttpContextAccessor();
@@ -70,7 +70,7 @@ namespace Demo.APIs
 
             #endregion
 
-            #region Configure Kestrel Middlwares
+            #region Configure Kestrel Middlewares
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
