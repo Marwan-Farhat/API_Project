@@ -1,12 +1,7 @@
 ﻿using Demo.APIs.Controllers.Base;
-using Demo.Core.Application.Abstraction.Models.Basket;
 using Demo.Core.Application.Abstraction.Services;
+using Demo.Shared.Models.Basket;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.APIs.Controllers.Basket
 {

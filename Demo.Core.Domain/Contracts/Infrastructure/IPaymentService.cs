@@ -1,4 +1,5 @@
 ﻿using Demo.Core.Domain.Entities.Basket;
+using Demo.Shared.Models.Basket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Demo.Core.Domain.Contracts.Infrastructure
 {
     public interface IPaymentService
     {
-        Task<CustomerBasket> CreateOrUpdatePaymentIntent(string basketId);
+        Task<CustomerBasketDto> CreateOrUpdatePaymentIntent(string basketId);
     }
 }

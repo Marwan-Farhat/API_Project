@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Basket;
 using Demo.Core.Application.Abstraction.Models.Common;
 using Demo.Core.Application.Abstraction.Models.Employees;
 using Demo.Core.Application.Abstraction.Models.Orders;
@@ -12,6 +11,7 @@ using Demo.Core.Domain.Entities.Identity;
 
 using UserAddress = Demo.Core.Domain.Entities.Identity.Address;
 using OrderAddress = Demo.Core.Domain.Entities.Orders.Address;
+using Demo.Shared.Models.Basket;
 
 
 
@@ -44,11 +44,11 @@ namespace Demo.Core.Application.Mapping
                 .ForMember(dest => dest.ProductName, options => options.MapFrom(src => src.Product.ProductName))
                 .ForMember(dest => dest.PictureUrl, options => options.MapFrom<OrderItemPictureUrlResolver>());
 
-            CreateMap<Domain.Entities.Orders.Address, AddressDto>().ReverseMap();
+            CreateMap<OrderAddress, AddressDto>().ReverseMap();
+
             CreateMap<DeliveryMethod, DeliveryMethodDto>();
 
-
-            CreateMap<Domain.Entities.Identity.Address, AddressDto>().ReverseMap();
+            CreateMap<UserAddress, AddressDto>().ReverseMap();
 
         }
     }

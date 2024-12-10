@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Basket
+namespace Demo.Shared.Models.Basket
 {
     public class CustomerBasketDto
     {

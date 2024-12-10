@@ -1,31 +1,34 @@
-﻿using Demo.Core.Application.Abstraction.Services.Basket;
-using Demo.Core.Application.Abstraction.Services.Orders;
-using Demo.Core.Application.Abstraction.Services.Products;
+﻿using AutoMapper;
 using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Basket;
 using Demo.Core.Domain.Entities.Orders;
-using Demo.Core.Domain.Entities.Products;
 using Demo.Shared.Models;
-using Microsoft.Extensions.Configuration;
+using Demo.Shared.Models.Basket;
 using Microsoft.Extensions.Options;
 using Stripe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Product = Demo.Core.Domain.Entities.Products.Product;
 
 namespace Demo.Infrastructure.Payment_Service
 {
-    internal class PaymentService(IBasketRepository basketRepository, IUnitOfWork unitOfWork, IOptions<RedisSettings> redisSettings) : IPaymentService
+    internal class PaymentService(
+        IBasketRepository basketRepository, 
+        IUnitOfWork unitOfWork, 
+        IOptions<RedisSettings> redisSettings, 
+        IMapper mapper,
+        IOptions<StripeSettings> stripeSettings
+        ): IPaymentService
     {
         private readonly RedisSettings _redisSettings = redisSettings.Value;
-        public async Task<CustomerBasket> CreateOrUpdatePaymentIntent(string basketId)
+        private readonly StripeSettings _stripeSettings = stripeSettings.Value;
+
+        public async Task<CustomerBasketDto> CreateOrUpdatePaymentIntent(string basketId)
         {
-            // First Get Basket to Get the items
+            // First Get Stripe Secret Key as the service will call stripe so it has to have secret key 
+            StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
+
+            // Second Get Basket to Get the items
             var basket = await basketRepository.GetAsync(basketId);
 
             if (basket is null) throw new NotFoundException(nameof(CustomerBasket),basketId);
@@ -65,7 +68,7 @@ namespace Demo.Infrastructure.Payment_Service
                 {
                     Amount = (long)basket.Items.Sum(item => item.Price * 100 * item.Quantity) + (long)basket.ShippingPrice * 100,
                     Currency = "USD",
-                    PaymentMethodTypes = new List<string>() { "Card" }
+                    PaymentMethodTypes = new List<string>() { "card" }
                 };
 
                 paymentIntent = await paymentIntentService.CreateAsync(options);  // Integration with stripe
@@ -85,7 +88,8 @@ namespace Demo.Infrastructure.Payment_Service
 
             await basketRepository.UpdateAsync(basket, TimeSpan.FromDays(_redisSettings.TimeToLiveInDays));
 
-            return basket;
+            return mapper.Map<CustomerBasketDto>(basket);
         }
+
     }
 }
