@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Basket;
 using Demo.Core.Application.Abstraction.Services.Basket;
 using Demo.Core.Application.Exceptions;
 using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Core.Domain.Entities.Basket;
+using Demo.Shared.Models.Basket;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

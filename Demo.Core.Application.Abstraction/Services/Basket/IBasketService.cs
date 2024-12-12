@@ -1,9 +1,4 @@
-﻿using Demo.Core.Application.Abstraction.Models.Basket;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Demo.Shared.Models.Basket;
 
 namespace Demo.Core.Application.Abstraction.Services.Basket
 {

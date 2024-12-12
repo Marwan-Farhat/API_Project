@@ -58,6 +58,16 @@ namespace Demo.APIs
             builder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
             builder.Services.AddInfrastructureServices(builder.Configuration);
 
+            builder.Services.AddCors(corsOptions =>
+            {
+                corsOptions.AddPolicy("TalabatPolicy", policyBuilder =>
+                {
+                    policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins(builder.Configuration["Urls:FrontBaseUrl"]);  // AllowAnyHeader: allowing any Request Header
+                                                                                                                              // AllowAnyMethod: allowing any method [GET, POST]
+                                                                                                                             // WithOrigins: allow specific origin
+                });
+            });
+
             builder.Services.AddIdentityServices(builder.Configuration);
 
             #endregion
@@ -70,7 +80,7 @@ namespace Demo.APIs
 
             #endregion
 
-            #region Configure Kestrel Middlewares
+            #region Configure Kestrel Middlewares 
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
@@ -84,6 +94,8 @@ namespace Demo.APIs
             app.UseHttpsRedirection();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseStaticFiles();
+
+            app.UseCors("TalabatPolicy");
             
             app.UseAuthentication();
             app.UseAuthorization();

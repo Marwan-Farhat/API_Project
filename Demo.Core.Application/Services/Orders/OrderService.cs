@@ -3,6 +3,7 @@ using Demo.Core.Application.Abstraction.Models.Orders;
 using Demo.Core.Application.Abstraction.Services.Basket;
 using Demo.Core.Application.Abstraction.Services.Orders;
 using Demo.Core.Application.Exceptions;
+using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Orders;
 using Demo.Core.Domain.Entities.Products;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Services.Orders
 {
-    internal class OrderService(IUnitOfWork unitOfWork,IMapper mapper,IBasketService basketService) : IOrderService
+    internal class OrderService(IUnitOfWork unitOfWork,IMapper mapper,IBasketService basketService,IPaymentService paymentService) : IOrderService
     {
         public async Task<OrderToReturnDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order)
         {
@@ -62,18 +63,32 @@ namespace Demo.Core.Application.Services.Orders
             // 5.Get Delivery Method
             var deliveryMethod = await unitOfWork.GetRepository<DeliveryMethod, int>().GetAsync(order.DeliveryMethodId);
 
-            // 6.Create Order
+            // 6. Check if there is order with the same paymentIntent (Like Lag in application customer press more than one time and the app make 2 orders with same  paymentIntentId)
+            var orderRepo = unitOfWork.GetRepository<Order, int>();
+
+            var orderSpecs = new OrderByPaymentIntentSpecifications(basket.PaymentIntentId!);
+
+            var existingOrder = await orderRepo.GetWithSpecAsync(orderSpecs);
+
+            if (existingOrder is not null)
+            {
+                orderRepo.Delete(existingOrder);
+                await paymentService.CreateOrUpdatePaymentIntent(basket.Id);
+            }
+
+            // 7.Create Order
             var orderTOCreate = new Order()
             {
                 BuyerEmail = buyerEmail,
                 ShippingAddress=address,
                 Items=orderItems,
                 SubTotal=subTotal,
-                DeliveryMethod= deliveryMethod
+                DeliveryMethod= deliveryMethod,
+                PaymentIntentId = basket.PaymentIntentId! 
             };
-            await unitOfWork.GetRepository<Order, int>().AddAsync(orderTOCreate);
+            await orderRepo.AddAsync(orderTOCreate);
 
-            // 7.Save To Database
+            // 8.Save To Database
             var created = await unitOfWork.CompleteAsync() > 0;
             if (!created) throw new BadRequestException("an error occured during creating the order");
 

@@ -16,7 +16,7 @@ namespace Demo.Core.Application.Abstraction.Models.Orders
         public required AddressDto ShippingAddress { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Total { get; set; }
-
+        public string PaymentIntentId { get; set; }
 
         // Navigational Properties Foreign Keys
         public int? DeliveryMethodId { get; set; }
