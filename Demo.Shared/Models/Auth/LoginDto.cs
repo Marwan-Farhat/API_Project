@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Auth
+namespace Demo.Shared.Models.Auth
 {
     public class LoginDto
     {

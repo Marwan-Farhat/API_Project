@@ -1,5 +1,5 @@
-﻿using Demo.Core.Application.Abstraction.Services.Auth;
-using Demo.Core.Application.Abstraction.Services.Basket;
+﻿using Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure;
+using Demo.Core.Application.Abstraction.Services.Auth;
 using Demo.Core.Application.Abstraction.Services.Orders;
 using Demo.Core.Application.Abstraction.Services.Products;
 using System;
@@ -14,7 +14,6 @@ namespace Demo.Core.Application.Abstraction.Services
     {
         public IOrderService OrderService { get; }
         public IProductService ProductService { get; }
-        public IBasketService BasketService { get; }
         public IAuthService AuthService { get; }
     }
 }

@@ -1,16 +1,8 @@
 ﻿using Demo.APIs.Controllers.Base;
-using Demo.APIs.Controllers.Errors;
 using Demo.Core.Application.Abstraction.Common;
-using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Demo.Shared.Models.Products;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.APIs.Controllers.Controllers.Products
 {

@@ -1,11 +1,4 @@
-﻿using Demo.Core.Application.Abstraction.Models.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Demo.Core.Application.Abstraction.Common
+﻿namespace Demo.Core.Application.Abstraction.Common
 {
     public class Pagination<T>
     {

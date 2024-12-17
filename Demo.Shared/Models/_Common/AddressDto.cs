@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Common
+namespace Demo.Shared.Models.Common
 {
     public class AddressDto
     {

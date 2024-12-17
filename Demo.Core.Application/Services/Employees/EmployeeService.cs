@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Employees;
 using Demo.Core.Application.Abstraction.Services.Employees;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Employees;
 using Demo.Core.Domain.Specifications.Employees;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Demo.Shared.Models.Employees;
 
 namespace Demo.Core.Application.Services.Employees
 {

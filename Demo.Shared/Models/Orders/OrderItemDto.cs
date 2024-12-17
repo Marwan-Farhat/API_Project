@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Orders
-{
+namespace Demo.Shared.Models.Orders
+{ 
     public class OrderItemDto
     {
         public int Id { get; set; }

@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Services.Basket;
-using Demo.Core.Application.Exceptions;
+using Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure;
 using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Core.Domain.Entities.Basket;
+using Demo.Shared.Exceptions;
 using Demo.Shared.Models.Basket;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Services.Basket
 {

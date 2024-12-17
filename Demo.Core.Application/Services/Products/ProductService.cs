@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
 using Demo.Core.Application.Abstraction.Common;
-using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services.Products;
-using Demo.Core.Application.Exceptions;
-using Demo.Core.Domain;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Products;
-using Demo.Core.Domain.Specifications;
 using Demo.Core.Domain.Specifications.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Demo.Shared.Exceptions;
+using Demo.Shared.Models.Products;
 
 namespace Demo.Core.Application.Services.Products
 {

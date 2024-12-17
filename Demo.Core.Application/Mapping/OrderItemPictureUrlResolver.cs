@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Orders;
-using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Domain.Entities.Orders;
-using Demo.Core.Domain.Entities.Products;
+using Demo.Shared.Models.Orders;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Mapping
 {

@@ -1,6 +1,6 @@
 ﻿using Demo.Shared.Models.Basket;
 
-namespace Demo.Core.Application.Abstraction.Services.Basket
+namespace Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure
 {
     public interface IBasketService
     {

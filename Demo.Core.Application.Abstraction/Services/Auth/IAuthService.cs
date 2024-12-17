@@ -1,11 +1,6 @@
-﻿using Demo.Core.Application.Abstraction.Models.Auth;
-using Demo.Core.Application.Abstraction.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Demo.Shared.Models.Auth;
+using Demo.Shared.Models.Common;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.Core.Application.Abstraction.Services.Auth
 {

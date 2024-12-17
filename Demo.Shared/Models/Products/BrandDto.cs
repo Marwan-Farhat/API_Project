@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Products
+namespace Demo.Shared.Models.Products
 {
-    public class CategoryDto
+    public class BrandDto
     {
         public int Id { get; set; }
         public required string Name { get; set; }

@@ -1,18 +1,13 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Orders;
-using Demo.Core.Application.Abstraction.Services.Basket;
+using Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure;
+using Demo.Core.Application.Abstraction.Common.Infrastructure;
 using Demo.Core.Application.Abstraction.Services.Orders;
-using Demo.Core.Application.Exceptions;
-using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Core.Domain.Contracts.Persistence;
 using Demo.Core.Domain.Entities.Orders;
 using Demo.Core.Domain.Entities.Products;
 using Demo.Core.Domain.Specifications.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Demo.Shared.Exceptions;
+using Demo.Shared.Models.Orders;
 
 namespace Demo.Core.Application.Services.Orders
 {

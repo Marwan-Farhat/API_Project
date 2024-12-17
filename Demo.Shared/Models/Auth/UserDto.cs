@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Abstraction.Models.Auth
+namespace Demo.Shared.Models.Auth
 {
     // UserDto: After User LogIn I will need to return to him UserDto Information (Id, DisplayName, Email, Token)
     public class UserDto

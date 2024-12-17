@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Core.Application.Exceptions
+namespace Demo.Shared.Exceptions
 {
     public class ValidationException:BadRequestException
     {

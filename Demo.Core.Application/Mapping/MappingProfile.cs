@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Common;
-using Demo.Core.Application.Abstraction.Models.Employees;
-using Demo.Core.Application.Abstraction.Models.Orders;
-using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Domain.Entities.Basket;
 using Demo.Core.Domain.Entities.Employees;
 using Demo.Core.Domain.Entities.Orders;
 using Demo.Core.Domain.Entities.Products;
-using Demo.Core.Domain.Entities.Identity;
-
-using UserAddress = Demo.Core.Domain.Entities.Identity.Address;
-using OrderAddress = Demo.Core.Domain.Entities.Orders.Address;
 using Demo.Shared.Models.Basket;
+using Demo.Shared.Models.Common;
+using Demo.Shared.Models.Employees;
+using Demo.Shared.Models.Orders;
+using Demo.Shared.Models.Products;
+using OrderAddress = Demo.Core.Domain.Entities.Orders.Address;
+using UserAddress = Demo.Core.Domain.Entities.Identity.Address;
 
 
 

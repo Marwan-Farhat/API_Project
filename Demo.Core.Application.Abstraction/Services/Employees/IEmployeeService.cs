@@ -1,9 +1,4 @@
-﻿using Demo.Core.Application.Abstraction.Models.Employees;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Demo.Shared.Models.Employees;
 
 namespace Demo.Core.Application.Abstraction.Services.Employees
 {

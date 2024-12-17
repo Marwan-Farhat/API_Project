@@ -1,10 +1,6 @@
-﻿using Azure;
-using Demo.APIs.Controllers.Errors;
-using Demo.Core.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Demo.APIs.Controllers.Errors;
+using Demo.Shared.Exceptions;
 using System.Net;
-using static Demo.APIs.Controllers.Errors.ApiValidationErrorResponse;
 
 namespace Demo.APIs.Middlewares
 {
