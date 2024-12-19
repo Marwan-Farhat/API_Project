@@ -3,9 +3,9 @@ using Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure;
 using Demo.Shared.Models.Basket;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Demo.APIs.Controllers.Basket
+namespace Demo.APIs.Controllers.Controllers.Basket
 {
-    public class BasketController(IBasketService basketService):BaseApiController
+    public class BasketController(IBasketService basketService) : BaseApiController
     {
         [HttpGet]  // Get: /api/Basket?id
         public async Task<ActionResult<CustomerBasketDto>> GetBasket(string id)
@@ -26,7 +26,7 @@ namespace Demo.APIs.Controllers.Basket
         [HttpDelete]  // Delete: /api/Basket
         public async Task DeleteBasket(string id)
         {
-             await basketService.DeleteCustomerBasketAsync(id);
+            await basketService.DeleteCustomerBasketAsync(id);
         }
     }
 }

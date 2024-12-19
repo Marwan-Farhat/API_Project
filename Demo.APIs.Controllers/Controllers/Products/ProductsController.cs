@@ -1,4 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
+using Demo.APIs.Controllers.Filters;
 using Demo.Core.Application.Abstraction.Common;
 using Demo.Core.Application.Abstraction.Services;
 using Demo.Shared.Models.Products;
@@ -8,6 +9,7 @@ namespace Demo.APIs.Controllers.Controllers.Products
 {
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
+        [CachedAttribute(600)]
         [HttpGet]  // GET: /api/products
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)  // [FromQuery] Because values we receive from Query Params from URL and here the data add to an object
         {
