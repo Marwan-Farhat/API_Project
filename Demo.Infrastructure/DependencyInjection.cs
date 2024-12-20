@@ -1,6 +1,8 @@
-﻿using Demo.Core.Application.Abstraction.Common.Infrastructure;
+﻿using Demo.Core.Application.Abstraction.Common.Contracts.Infrastructure;
+using Demo.Core.Application.Abstraction.Common.Infrastructure;
 using Demo.Core.Domain.Contracts.Infrastructure;
 using Demo.Infrastructure.Basket_Repository;
+using Demo.Infrastructure.Cache_Service;
 using Demo.Infrastructure.Payment_Service;
 using Demo.Shared.Models;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,8 @@ namespace Demo.Infrastructure
                 var connectionString = configuration.GetConnectionString("Redis");
                 return ConnectionMultiplexer.Connect(connectionString!);
             });
+
+            services.AddSingleton(typeof(IResponseCacheService), typeof(ResponseCacheService));
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 
