@@ -1,21 +1,15 @@
 ﻿using Demo.APIs.Controllers.Base;
-using Demo.APIs.Controllers.Errors;
+using Demo.APIs.Controllers.Filters;
 using Demo.Core.Application.Abstraction.Common;
-using Demo.Core.Application.Abstraction.Models.Products;
 using Demo.Core.Application.Abstraction.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using Demo.Shared.Models.Products;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Demo.APIs.Controllers.Controllers.Products
 {
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
+        [CachedAttribute(600)]
         [HttpGet]  // GET: /api/products
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductSpecParams specParams)  // [FromQuery] Because values we receive from Query Params from URL and here the data add to an object
         {

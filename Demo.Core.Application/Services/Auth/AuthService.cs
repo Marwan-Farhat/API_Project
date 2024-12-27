@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Demo.Core.Application.Abstraction.Models.Auth;
-using Demo.Core.Application.Abstraction.Models.Common;
 using Demo.Core.Application.Abstraction.Services.Auth;
-using Demo.Core.Application.Exceptions;
 using Demo.Core.Application.Extensions;
 using Demo.Core.Domain.Entities.Identity;
+using Demo.Shared.Exceptions;
+using Demo.Shared.Models.Auth;
+using Demo.Shared.Models.Common;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

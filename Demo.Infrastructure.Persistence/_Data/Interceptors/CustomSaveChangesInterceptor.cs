@@ -45,6 +45,9 @@ namespace Demo.Infrastructure.Persistence.Data.Interceptors
                 /// if (entry.Entity is Order or OrderItem)  // if i need to set creates Orders or OrderItems with specific userId like admin
                 ///     _loggedInUserService.UserId = "";
 
+                //if (string.IsNullOrEmpty(_loggedInUserService.UserId))
+                //      _loggedInUserService.UserId = "";
+
                 if (entry.State is EntityState.Added)
                 {
                     entry.Entity.CreatedBy = _loggedInUserService.UserId!;

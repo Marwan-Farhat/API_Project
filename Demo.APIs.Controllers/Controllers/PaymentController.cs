@@ -1,5 +1,5 @@
 ﻿using Demo.APIs.Controllers.Base;
-using Demo.Core.Domain.Contracts.Infrastructure;
+using Demo.Core.Application.Abstraction.Common.Infrastructure;
 using Demo.Shared.Models.Basket;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

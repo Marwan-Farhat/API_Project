@@ -1,9 +1,4 @@
-﻿using Demo.Core.Application.Abstraction.Models.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Demo.Shared.Models.Orders;
 
 namespace Demo.Core.Application.Abstraction.Services.Orders
 {

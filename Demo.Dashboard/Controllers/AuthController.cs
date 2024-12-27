@@ -1,5 +1,5 @@
-﻿using Demo.Core.Application.Abstraction.Models.Auth;
-using Demo.Core.Domain.Entities.Identity;
+﻿using Demo.Core.Domain.Entities.Identity;
+using Demo.Shared.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
